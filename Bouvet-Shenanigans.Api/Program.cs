@@ -1,28 +1,20 @@
-var builder = WebApplication.CreateBuilder(args);
+using Bouvet_Shenanigans.Api;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var builder = WebApplication.CreateBuilder(args);
+
+    await Startup.ConfigureServices(builder.Services, builder.Configuration);
+
+    var app = builder.Build();
+
+    await Startup.ConfigureDatabase(app);
+
+    await Startup.ConfigureMiddleware(app);
+
+    await app.RunAsync();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapHealthChecks("/health");
-
-app.Run();
+catch (Exception e)
+{
+    Console.WriteLine("Error: " + e);
+}
