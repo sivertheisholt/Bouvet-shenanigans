@@ -1,3 +1,4 @@
+using Bouvet_Shenanigans.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bouvet_Shenanigans.Api.Controllers

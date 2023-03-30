@@ -1,4 +1,4 @@
-namespace Bouvet_Shenanigans.Api
+namespace Bouvet_Shenanigans.Api.Entities
 {
     public class WeatherForecast
     {
