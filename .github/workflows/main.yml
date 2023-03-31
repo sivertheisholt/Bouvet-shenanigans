@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+      - run: cd Bouvet-Shenanigans.Web
       - run: npm ci
       - run: npm build
       - run: npm postbuild
