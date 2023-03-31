@@ -26,11 +26,12 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - run: cd Bouvet-Shenanigans.Web && npm ci
+      - run: npm ci
+        working-directory: ./Bouvet-Shenanigans-Web
       - run: npm build
-        working-directory: ./Bouvet-Shenanigans.Web
+        working-directory: ./Bouvet-Shenanigans-Web
       - run: npm postbuild
-        working-directory: ./Bouvet-Shenanigans.Web
+        working-directory: ./Bouvet-Shenanigans-Web
       
       # Run dotnet build and publish
       - name: dotnet build and publish
