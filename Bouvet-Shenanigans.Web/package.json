@@ -38,6 +38,6 @@
   },
   "devDependencies": {
     "eslint-config-react-app": "^7.0.1",
-    "typescript": "5.0.1"
+    "typescript": "5.0.2"
   }
 }
