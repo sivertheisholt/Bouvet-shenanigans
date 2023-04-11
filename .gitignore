@@ -29,3 +29,5 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,dotnetcore
 .fake
+
+build
