@@ -1,6 +1,9 @@
 using Bouvet_Shenanigans.Api.Data;
 using Bouvet_Shenanigans.Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
 namespace Bouvet_Shenanigans.Api
 {
@@ -9,6 +12,11 @@ namespace Bouvet_Shenanigans.Api
         public static Task ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(config.GetSection("AzureAd"));
+
+            services.AddAuthorization();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -49,6 +57,7 @@ namespace Bouvet_Shenanigans.Api
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env == "Development")
             {
+                
             }
         }
         public static Task ConfigureMiddleware(WebApplication app)
@@ -60,9 +69,9 @@ namespace Bouvet_Shenanigans.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
 
-            app.UseAuthorization();
+            app.UseHttpsRedirection();
 
             app.MapControllers();
 

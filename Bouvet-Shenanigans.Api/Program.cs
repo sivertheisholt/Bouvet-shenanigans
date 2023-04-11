@@ -1,5 +1,6 @@
 using Bouvet_Shenanigans.Api;
 
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
