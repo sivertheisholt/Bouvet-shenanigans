@@ -44,10 +44,6 @@
   },
   "devDependencies": {
     "eslint-config-react-app": "^7.0.1",
-<<<<<<< HEAD
-    "typescript": "4.1.6"
-=======
     "typescript": "5.0.2"
->>>>>>> 20aa61b68bda2ccbc388c10d41c491bc7e244f6c
   }
 }
