@@ -27,9 +27,9 @@ jobs:
           node-version: 18
       - run: npm ci
         working-directory: ./Bouvet-Shenanigans-Web
-      - run: npm build
+      - run: npm run build
         working-directory: ./Bouvet-Shenanigans-Web
-      - run: npm postbuild
+      - run: npm run postbuild
         working-directory: ./Bouvet-Shenanigans-Web
 
       # Run dotnet build and publish
