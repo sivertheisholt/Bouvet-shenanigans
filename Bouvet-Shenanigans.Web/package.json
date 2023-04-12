@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "prestart": "node aspnetcore-https && node aspnetcore-react",
-    "postbuild": "mv build ./Bouvet-Shenanigans.Api/wwwroot"
+    "postbuild": "mv ./build ../Bouvet-Shenanigans.Api/wwwroot"
   },
   "eslintConfig": {
     "extends": [
