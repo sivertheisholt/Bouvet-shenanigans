@@ -30,7 +30,7 @@ jobs:
           node-version: 18
       - run: npm ci
         working-directory: ./Bouvet-Shenanigans.Web
-      - run: cd ./Bouvet-Shenanigans.Web; npm run build; mv ./build ../Bouvet-Shenanigans.Api/wwwroot;
+      - run: cd ./Bouvet-Shenanigans.Web; npm run build; cp -a ./build/. ../Bouvet-Shenanigans.Api/wwwroot;
 
       # Run dotnet build and publish
       - name: dotnet build and publish
