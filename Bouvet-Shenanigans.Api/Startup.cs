@@ -13,10 +13,10 @@ namespace Bouvet_Shenanigans.Api
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(config.GetSection("AzureAd"));
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddMicrosoftIdentityWebApi(config.GetSection("AzureAd"));
 
-            services.AddAuthorization();
+            //services.AddAuthorization();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -57,7 +57,7 @@ namespace Bouvet_Shenanigans.Api
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env == "Development")
             {
-                
+
             }
         }
         public static Task ConfigureMiddleware(WebApplication app)
@@ -69,7 +69,7 @@ namespace Bouvet_Shenanigans.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
