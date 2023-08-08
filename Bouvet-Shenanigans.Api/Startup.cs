@@ -13,11 +13,6 @@ namespace Bouvet_Shenanigans.Api
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //.AddMicrosoftIdentityWebApi(config.GetSection("AzureAd"));
-
-            //services.AddAuthorization();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<DataContext>(options =>
@@ -35,7 +30,6 @@ namespace Bouvet_Shenanigans.Api
                 options.UseSqlServer(connStr);
             });
 
-
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -51,14 +45,6 @@ namespace Bouvet_Shenanigans.Api
             var context = services.GetRequiredService<DataContext>();
 
             await context.Database.MigrateAsync();
-
-            var unitOfWork = services.GetRequiredService<IUnitOfWork>();
-
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (env == "Development")
-            {
-
-            }
         }
         public static Task ConfigureMiddleware(WebApplication app)
         {
@@ -69,11 +55,17 @@ namespace Bouvet_Shenanigans.Api
                 app.UseSwaggerUI();
             }
 
-            //app.UseAuthentication();
-
             app.UseHttpsRedirection();
 
-            app.MapControllers();
+            app.UseRouting();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             return Task.CompletedTask;
         }
