@@ -5,6 +5,7 @@
 localhost-key.pem
 localhost.pem
 .env.development.local
+appsettings.Development.json
 
 ### DotnetCore ###
 # .NET Core build folders
