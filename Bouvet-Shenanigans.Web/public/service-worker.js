@@ -55,8 +55,14 @@ self.addEventListener("activate", async () => {
 
 self.addEventListener("push", function (event) {
   if (event.data) {
+    const notification = new Notification("Hello from bouvet shenanigans", {
+      body: event.data.text(),
+    });
     console.log("Push event!! ", event.data.text());
   } else {
+    const notification = new Notification("Hello", {
+      body: event.data.text(),
+    });
     console.log("Push event but no data");
   }
 });
