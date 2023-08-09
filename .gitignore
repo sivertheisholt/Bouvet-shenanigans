@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,dotnetcore
 
+# Custom
+localhost-key.pem
+localhost.pem
+.env.development.local
+
 ### DotnetCore ###
 # .NET Core build folders
 bin/
