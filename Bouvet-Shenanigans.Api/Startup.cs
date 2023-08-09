@@ -59,13 +59,15 @@ namespace Bouvet_Shenanigans.Api
 
             app.UseRouting();
 
+            app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.MapControllers();
 
             return Task.CompletedTask;
         }
