@@ -24,6 +24,7 @@ const registerServiceWorker = async () => {
 
 const main = async () => {
   check();
+  console.log("Registrering service worker")
   await registerServiceWorker();
 };
 
