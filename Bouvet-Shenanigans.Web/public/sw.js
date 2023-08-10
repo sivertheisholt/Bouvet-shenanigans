@@ -7,7 +7,6 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", async () => {
-  try {
     console.log("Service worker activated");
     const applicationServerKey = urlB64ToUint8Array(
       "BOoQqpt5TXsZP0Ms1pzu4MIVsGld2uXzcvcOuppsweBM67yti1zog6Qr9dnnSKIHcr_L-29U3dqr7rUG8a_XotI"
@@ -18,9 +17,6 @@ self.addEventListener("activate", async () => {
     const response = await saveSubscription(subscription);
     console.log("Done");
     console.log(response);
-  } catch (err) {
-    console.log("Error", err);
-  }
 });
 
 self.addEventListener("push", function (event) {
