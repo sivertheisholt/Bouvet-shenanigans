@@ -83,7 +83,7 @@
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
       // Checks if should display install popup notification:
-      if (isMobile() && !isInStandaloneMode()) {
+      if (isMobile && !isInStandaloneMode()) {
         this.setState({ showInstallMessage: true });
       }
 
