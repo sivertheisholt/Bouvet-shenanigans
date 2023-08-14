@@ -1,5 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
+self.addEventListener('fetch', function(event) {});
+
 self.addEventListener("install", (event) => {
   console.log("Running install event");
   event.waitUntil(self.registration?.navigationPreload.enable());
