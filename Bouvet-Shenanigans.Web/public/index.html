@@ -45,7 +45,7 @@
     if ("serviceWorker" in navigator) {
       await navigator.serviceWorker.register("/sw.js");
       // helps you detect mobile browsers (to show a relevant message as the process of installing your PWA changes from browser to browser)
-      var isMobile = {
+      const isMobile = {
         Android: function () {
           return navigator.userAgent.match(/Android/i);
         },
@@ -80,19 +80,10 @@
         },
       };
 
-      // use this to check if the user is already using your PWA - no need to prompt if in standalone
-      function isStandalone() {
-        const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
-        if (document.referrer.startsWith("android-app://")) {
-          return true; // Trusted web app
-        } else if ("standalone" in navigator || isStandalone) {
-          return true;
-        }
-        return false;
-      }
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
       // Checks if should display install popup notification:
-      if (isMobile() && !isStandalone()) {
+      if (isMobile() && !isInStandaloneMode()) {
         this.setState({ showInstallMessage: true });
       }
 
