@@ -1,4 +1,5 @@
 {
+  "id": "Bouvet-Shenanigans",
   "short_name": "Bouvet",
   "name": "Bouvet Shenanigans",
   "icons": [
@@ -10,7 +11,8 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "logo512.png",
@@ -33,5 +35,12 @@
     "entertainment",
     "games",
     "productivity"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 0
+  },
+  "handle_links": "auto",
+  "launch_handler": "auto",
+  "screenshots" : [
   ]
 }
