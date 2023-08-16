@@ -21,5 +21,17 @@
   "start_url": ".",
   "display": "fullscreen",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Bouvet shenanigans testing application",
+  "dir": "auto",
+  "scope": ".",
+  "lang": "en",
+  "orientation": "portrait",
+  "categories": [
+    "business",
+    "education",
+    "entertainment",
+    "games",
+    "productivity"
+  ]
 }
