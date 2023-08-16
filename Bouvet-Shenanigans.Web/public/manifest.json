@@ -42,5 +42,16 @@
   "handle_links": "auto",
   "launch_handler": "auto",
   "screenshots" : [
-  ]
+  ],
+  "widgets": [
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/"
+    }
+  ],
+  "protocol_handlers": [
+  ],
+  "prefer_related_applications": false
 }
