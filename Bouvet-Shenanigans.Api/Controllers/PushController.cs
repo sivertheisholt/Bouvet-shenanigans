@@ -36,6 +36,10 @@ namespace Bouvet_Shenanigans.Api.Controllers
         [HttpPost("push-not")]
         public async Task<IActionResult> PostNot()
         {
+            Console.WriteLine("Enpoint: " + DummySubscription.Endpoint);
+            Console.WriteLine("Exp: " + DummySubscription.ExpirationTime);
+            Console.WriteLine("Auth: " + DummySubscription.Keys.Auth);
+            Console.WriteLine("P256dh: " + DummySubscription.Keys.P256dh);
             var webPushClient = new WebPushClient();
             var subscription = new PushSubscription(DummySubscription!.Endpoint, DummySubscription.Keys.P256dh, DummySubscription.Keys.Auth);
             var vapidDetails = new VapidDetails("mailto:sivert.heisholt@bouvet.no", "BOoQqpt5TXsZP0Ms1pzu4MIVsGld2uXzcvcOuppsweBM67yti1zog6Qr9dnnSKIHcr_L-29U3dqr7rUG8a_XotI", _privateKey);
