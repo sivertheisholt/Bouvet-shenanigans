@@ -1,6 +1,5 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-import { customAxios } from "~/api/custom-axios";
 import { OverviewElectricity } from "~/components/electricity/overview-electricity";
 import { OverviewFactory } from "~/components/factory/overview-factory";
 
@@ -14,36 +13,71 @@ import type { Wind } from "~/types/wind";
 
 export const useCoalPlantsData = routeLoader$(
   async (): Promise<Array<CoalPlant>> => {
-    return await customAxios.get(`api/electricity/coal`).then((resp: any) => {
-      return resp.data;
-    });
+    const res = await fetch(
+      "https://bouvetfarmfresh.azurewebsites.net/api/electricity/coal",
+      {
+        headers: {
+          ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
+          Accept: "application/json",
+        },
+      }
+    );
+    return (await res.json()) as Array<CoalPlant>;
   }
 );
 
 export const useFactoriesData = routeLoader$(
   async (): Promise<Array<Factory>> => {
-    return await customAxios.get(`api/factories`).then((resp: any) => {
-      return resp.data;
-    });
+    const res = await fetch(
+      "https://bouvetfarmfresh.azurewebsites.net/api/factories",
+      {
+        headers: {
+          ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
+          Accept: "application/json",
+        },
+      }
+    );
+    return (await res.json()) as Array<Factory>;
   }
 );
 
 export const useSolarData = routeLoader$(async (): Promise<Solar> => {
-  return await customAxios.get(`api/electricity/solar`).then((resp: any) => {
-    return resp.data;
-  });
+  const res = await fetch(
+    "https://bouvetfarmfresh.azurewebsites.net/api/electricity/solar",
+    {
+      headers: {
+        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
+        Accept: "application/json",
+      },
+    }
+  );
+  return (await res.json()) as Solar;
 });
 
 export const useWindData = routeLoader$(async (): Promise<Wind> => {
-  return await customAxios.get(`api/electricity/wind`).then((resp: any) => {
-    return resp.data;
-  });
+  const res = await fetch(
+    "https://bouvetfarmfresh.azurewebsites.net/api/electricity/wind",
+    {
+      headers: {
+        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
+        Accept: "application/json",
+      },
+    }
+  );
+  return (await res.json()) as Wind;
 });
 
 export const useUserData = routeLoader$(async (): Promise<User> => {
-  return await customAxios.get(`api/users`).then((resp: any) => {
-    return resp.data;
-  });
+  const res = await fetch(
+    "https://bouvetfarmfresh.azurewebsites.net/api/users",
+    {
+      headers: {
+        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
+        Accept: "application/json",
+      },
+    }
+  );
+  return (await res.json()) as User;
 });
 
 export default component$(() => {
