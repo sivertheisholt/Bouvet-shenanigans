@@ -30,11 +30,13 @@ export const OverviewElectricity = component$(() => {
       <h1 style={{ marginBottom: "50px" }}>Electricity</h1>
       <div>
         <Gauge
-          value={(
-            wind.value.production +
-            solar.value.production +
-            coalTotal
-          ).toFixed(1)}
+          value={parseInt(
+            (
+              wind.value.production +
+              solar.value.production +
+              coalTotal
+            ).toFixed(1)
+          )}
           maxValueMultiplier={3.5}
           text="kWh"
         />
@@ -49,7 +51,7 @@ export const OverviewElectricity = component$(() => {
         <div style={{ width: "100%" }}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>Solar</p>
           <Gauge
-            value={solar.value.production.toFixed(1)}
+            value={parseInt(solar.value.production.toFixed(1))}
             maxValueMultiplier={3.5}
             text="kWh "
             maxHeight="300px"
@@ -58,7 +60,7 @@ export const OverviewElectricity = component$(() => {
         <div style={{ width: "100%", paddingLeft: "20%", paddingRight: "20%" }}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>Wind</p>
           <Gauge
-            value={wind.value.production.toFixed(1)}
+            value={parseInt(wind.value.production.toFixed(1))}
             maxValueMultiplier={2.35}
             text="kWh"
             maxHeight="300px"

@@ -12,10 +12,6 @@ export const OverviewFactory = component$(() => {
 
   if (!factories.value) return <></>;
 
-  const click = () => {
-    console.log("I clicked");
-  };
-
   return (
     <div
       style={{
@@ -56,7 +52,7 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={factories.value[0].capacity.toFixed(1)}
+              value={parseInt(factories.value[0].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -109,7 +105,7 @@ export const OverviewFactory = component$(() => {
               </p>
             </div>
             <Gauge
-              value={factories.value[1].capacity.toFixed(1)}
+              value={parseInt(factories.value[1].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -146,7 +142,7 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={factories.value[2].capacity.toFixed(1)}
+              value={parseInt(factories.value[2].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -199,7 +195,7 @@ export const OverviewFactory = component$(() => {
               </p>
             </div>
             <Gauge
-              value={factories.value[3].capacity.toFixed(1)}
+              value={parseInt(factories.value[3].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
