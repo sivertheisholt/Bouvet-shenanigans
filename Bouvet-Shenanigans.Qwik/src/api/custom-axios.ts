@@ -2,13 +2,11 @@ import { server$ } from "@builder.io/qwik-city";
 import axios from "axios";
 
 export const customAxios = server$(() => {
-  const BASE_URL = process.env.REACT_APP_ADMIN_BASEURL;
-  const API_KEY = process.env.API_KEY;
   return axios.create({
-    baseURL: BASE_URL,
+    baseURL: "https://bouvetfarmfresh.azurewebsites.net/",
     headers: {
       "Content-Type": "application/json",
-      ApiKey: API_KEY,
+      ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
     },
   });
 });
