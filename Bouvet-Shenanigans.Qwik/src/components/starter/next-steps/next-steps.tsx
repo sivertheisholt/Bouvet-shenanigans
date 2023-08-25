@@ -1,6 +1,6 @@
 import { component$, useSignal, useTask$ } from "@builder.io/qwik";
 import { fetchUser } from "~/endpoints/fetch-user";
-import type { User } from "~/types/User";
+import type { User } from "~/types/user";
 
 export default component$(() => {
   const user = useSignal<User | undefined>();
