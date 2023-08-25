@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
+import { customAxios } from "~/api/custom-axios";
 import { OverviewElectricity } from "~/components/electricity/overview-electricity";
 import { OverviewFactory } from "~/components/factory/overview-factory";
 
@@ -13,6 +14,13 @@ import type { Wind } from "~/types/wind";
 
 export const useCoalPlantsData = routeLoader$(
   async (): Promise<Array<CoalPlant>> => {
+    const customAxiosClient = await customAxios();
+    return await customAxiosClient
+      .get(`api/electricity/coal`)
+      .then((resp: any) => {
+        return resp.data;
+      });
+
     const res = await fetch(
       "https://bouvetfarmfresh.azurewebsites.net/api/electricity/coal",
       {
