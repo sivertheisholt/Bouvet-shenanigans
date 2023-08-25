@@ -1,24 +1,11 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import Gauge from "../starter/gauge";
-import type { Solar } from "~/types/solar";
-import type { Wind } from "~/types/wind";
-import { fetchWind } from "~/endpoints/fetch-wind";
-import { fetchSolar } from "~/endpoints/fetch-solar";
-import type { CoalPlant } from "~/types/coal-plant";
-import { fetchCoalPlants } from "~/endpoints/fetch-coal-plants";
+import { useCoalPlantsData, useSolarData, useWindData } from "~/routes";
 
 export const OverviewElectricity = component$(() => {
-  const solar = useSignal<Solar | undefined>();
-  const wind = useSignal<Wind | undefined>();
-  const coalPlants = useSignal<Array<CoalPlant> | undefined>();
-
-  useTask$(async () => {
-    wind.value = await fetchWind();
-    solar.value = await fetchSolar();
-    coalPlants.value = await fetchCoalPlants();
-  });
-
-  if (!solar.value || !wind.value || !coalPlants.value) return <></>;
+  const solar = useSolarData();
+  const wind = useWindData();
+  const coalPlants = useCoalPlantsData();
 
   const coalTotal = coalPlants.value.reduce(
     (acc, obj) => (obj.active ? acc + obj.production : acc),

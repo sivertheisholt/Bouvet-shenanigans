@@ -1,9 +1,9 @@
 import { component$ } from "@builder.io/qwik";
 import styles from "./power-button.module.css";
 
-export const PowerButton = component$(({ onClick }: { onClick?: any }) => {
+export const PowerButton = component$(() => {
   return (
-    <div onClick$={onClick} class={styles.powerButton}>
+    <div class={styles.powerButton}>
       <div class={styles.powerButtonBar}></div>
     </div>
   );

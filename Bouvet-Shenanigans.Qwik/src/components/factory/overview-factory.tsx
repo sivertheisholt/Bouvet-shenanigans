@@ -1,16 +1,10 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import Gauge from "../starter/gauge";
-import { fetchFactories } from "~/endpoints/fetch-factories";
-import type { Factory } from "~/types/factory";
 import { PowerButton } from "../buttons/power-button";
+import { useFactoriesData } from "~/routes";
 
 export const OverviewFactory = component$(() => {
-  const factories = useSignal<Array<Factory> | undefined>();
-  useTask$(async () => {
-    factories.value = await fetchFactories();
-  });
-
-  if (!factories.value) return <></>;
+  const factories = useFactoriesData();
 
   return (
     <div

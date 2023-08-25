@@ -1,12 +1,8 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
-import { fetchUser } from "~/endpoints/fetch-user";
-import type { User } from "~/types/user";
+import { component$ } from "@builder.io/qwik";
+import { useUserData } from "~/routes";
 
 export default component$(() => {
-  const user = useSignal<User | undefined>();
-  useTask$(async () => {
-    user.value = await fetchUser();
-  });
+  const user = useUserData();
 
   return (
     <div class="container container-purple container-center">
@@ -25,7 +21,7 @@ export default component$(() => {
             paddingBottom: "10px",
           }}
         >
-          {user.value?.balance.toFixed(0)} Kroner
+          {user.value.balance.toFixed(0)} Kroner
         </h2>
       </div>
     </div>
