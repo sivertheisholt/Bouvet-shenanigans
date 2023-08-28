@@ -1,11 +1,15 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-import { customAxios } from "~/api/custom-axios";
 import { OverviewElectricity } from "~/components/electricity/overview-electricity";
 import { OverviewFactory } from "~/components/factory/overview-factory";
 
 import Hero from "~/components/starter/hero/hero";
 import Starter from "~/components/starter/next-steps/next-steps";
+import { fetchCoalPlants } from "~/endpoints/fetch-coal-plants";
+import { fetchFactories } from "~/endpoints/fetch-factories";
+import { fetchSolar } from "~/endpoints/fetch-solar";
+import { fetchUser } from "~/endpoints/fetch-user";
+import { fetchWind } from "~/endpoints/fetch-wind";
 import type { CoalPlant } from "~/types/coal-plant";
 import type { Factory } from "~/types/factory";
 import type { Solar } from "~/types/solar";
@@ -14,78 +18,26 @@ import type { Wind } from "~/types/wind";
 
 export const useCoalPlantsData = routeLoader$(
   async (): Promise<Array<CoalPlant>> => {
-    const customAxiosClient = await customAxios();
-    return await customAxiosClient
-      .get(`api/electricity/coal`)
-      .then((resp: any) => {
-        return resp.data;
-      });
-
-    const res = await fetch(
-      "https://bouvetfarmfresh.azurewebsites.net/api/electricity/coal",
-      {
-        headers: {
-          ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
-          Accept: "application/json",
-        },
-      }
-    );
-    return (await res.json()) as Array<CoalPlant>;
+    return await fetchCoalPlants();
   }
 );
 
 export const useFactoriesData = routeLoader$(
   async (): Promise<Array<Factory>> => {
-    const res = await fetch(
-      "https://bouvetfarmfresh.azurewebsites.net/api/factories",
-      {
-        headers: {
-          ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
-          Accept: "application/json",
-        },
-      }
-    );
-    return (await res.json()) as Array<Factory>;
+    return await fetchFactories();
   }
 );
 
 export const useSolarData = routeLoader$(async (): Promise<Solar> => {
-  const res = await fetch(
-    "https://bouvetfarmfresh.azurewebsites.net/api/electricity/solar",
-    {
-      headers: {
-        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
-        Accept: "application/json",
-      },
-    }
-  );
-  return (await res.json()) as Solar;
+  return await fetchSolar();
 });
 
 export const useWindData = routeLoader$(async (): Promise<Wind> => {
-  const res = await fetch(
-    "https://bouvetfarmfresh.azurewebsites.net/api/electricity/wind",
-    {
-      headers: {
-        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
-        Accept: "application/json",
-      },
-    }
-  );
-  return (await res.json()) as Wind;
+  return await fetchWind();
 });
 
 export const useUserData = routeLoader$(async (): Promise<User> => {
-  const res = await fetch(
-    "https://bouvetfarmfresh.azurewebsites.net/api/users",
-    {
-      headers: {
-        ApiKey: "5ba28a1c-3c70-4d6d-9147-8ff195380b5e",
-        Accept: "application/json",
-      },
-    }
-  );
-  return (await res.json()) as User;
+  return await fetchUser();
 });
 
 export default component$(() => {
