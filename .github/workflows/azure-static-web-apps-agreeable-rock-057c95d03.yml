@@ -21,6 +21,9 @@ jobs:
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          FRESHFARM_BASEURL: ${{ secrets.FARMFRESH_BASEURL }}
+          API_KEY: ${{ secrets.API_KEY }}
         with:
           skip_api_build: true
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_ROCK_057C95D03 }}
