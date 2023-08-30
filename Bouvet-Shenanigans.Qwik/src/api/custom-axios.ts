@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const customAxios = () => {
+export const customAxios = (token: string, baseUrl: string) => {
   return axios.create({
-    baseURL: import.meta.env.PUBLIC_FARMFRESH_BASEURL,
+    baseURL: baseUrl,
     headers: {
       "Content-Type": "application/json",
-      ApiKey: import.meta.env.PUBLIC_API_URL,
+      ApiKey: token,
     },
   });
 };
