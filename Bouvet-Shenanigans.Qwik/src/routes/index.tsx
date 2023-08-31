@@ -5,11 +5,11 @@ import { OverviewFactory } from "~/components/factory/overview-factory";
 
 import Hero from "~/components/starter/hero/hero";
 import Starter from "~/components/starter/next-steps/next-steps";
-import { fetchCoalPlants } from "~/endpoints/fetch-coal-plants";
-import { fetchFactories } from "~/endpoints/fetch-factories";
-import { fetchSolar } from "~/endpoints/fetch-solar";
-import { fetchUser } from "~/endpoints/fetch-user";
-import { fetchWind } from "~/endpoints/fetch-wind";
+import { fetchCoalPlants } from "~/endpoints/server/fetch-coal-plants";
+import { fetchFactories } from "~/endpoints/server/fetch-factories";
+import { fetchSolar } from "~/endpoints/server/fetch-solar";
+import { fetchUser } from "~/endpoints/server/fetch-user";
+import { fetchWind } from "~/endpoints/server/fetch-wind";
 import type { CoalPlant } from "~/types/coal-plant";
 import type { Factory } from "~/types/factory";
 import type { Solar } from "~/types/solar";

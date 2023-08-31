@@ -1,11 +1,27 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import Gauge from "../starter/gauge";
 import { useCoalPlantsData, useSolarData, useWindData } from "~/routes";
+import { fetchSolar } from "~/endpoints/client/fetch-solar";
+import { fetchWind } from "~/endpoints/client/fetch-wind";
 
 export const OverviewElectricity = component$(() => {
-  const solar = useSolarData();
-  const wind = useWindData();
+  const solar = useStore({solar: useSolarData().value})
+  const wind = useStore({wind: useWindData().value})
   const coalPlants = useCoalPlantsData();
+
+  const isFetchingData = useSignal(false)
+
+  // Refetched solar/wind data fevery 10 seconds
+  useVisibleTask$(() => {
+    if(!isFetchingData.value)
+    {
+      isFetchingData.value = true;
+      setInterval(async () => {
+        solar.solar = await fetchSolar();
+        wind.wind = await fetchWind();
+      }, 10000)
+    }
+  })
 
   const coalTotal = coalPlants.value.reduce(
     (acc, obj) => (obj.active ? acc + obj.production : acc),
@@ -19,8 +35,8 @@ export const OverviewElectricity = component$(() => {
         <Gauge
           value={parseInt(
             (
-              wind.value.production +
-              solar.value.production +
+              wind.wind.production +
+              solar.solar.production +
               coalTotal
             ).toFixed(1)
           )}
@@ -38,7 +54,7 @@ export const OverviewElectricity = component$(() => {
         <div style={{ width: "100%" }}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>Solar</p>
           <Gauge
-            value={parseInt(solar.value.production.toFixed(1))}
+            value={parseInt(solar.solar.production.toFixed(1))}
             maxValueMultiplier={3.5}
             text="kWh "
             maxHeight="300px"
@@ -47,7 +63,7 @@ export const OverviewElectricity = component$(() => {
         <div style={{ width: "100%", paddingLeft: "20%", paddingRight: "20%" }}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>Wind</p>
           <Gauge
-            value={parseInt(wind.value.production.toFixed(1))}
+            value={parseInt(wind.wind.production.toFixed(1))}
             maxValueMultiplier={2.35}
             text="kWh"
             maxHeight="300px"

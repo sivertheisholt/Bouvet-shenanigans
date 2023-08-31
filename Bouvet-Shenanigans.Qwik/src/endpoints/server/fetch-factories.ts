@@ -1,5 +1,5 @@
 import type { RequestEventLoader } from "@builder.io/qwik-city";
-import { CustomServerAxiosInstance } from "./custom-server-fetcher";
+import { CustomServerAxiosInstance } from "../custom-server-fetcher";
 
 export const fetchFactories = async (
   requestEvent: RequestEventLoader<QwikCityPlatform>

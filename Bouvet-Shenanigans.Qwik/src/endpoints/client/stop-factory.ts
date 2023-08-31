@@ -1,4 +1,4 @@
-import { CustomClientAxiosInstance } from "./custom-client-fetcher";
+import { CustomClientAxiosInstance } from "../custom-client-fetcher";
 
 export const stopFactory = async (id: number) => {
   const axiosInstance = new CustomClientAxiosInstance();
