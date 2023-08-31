@@ -8,7 +8,7 @@ export const OverviewElectricity = component$(() => {
   const coalPlants = useCoalPlantsData();
 
   const coalTotal = coalPlants.value.reduce(
-    (acc: any, obj: any) => (obj.active ? acc + obj.production : acc),
+    (acc, obj) => (obj.active ? acc + obj.production : acc),
     0
   );
 

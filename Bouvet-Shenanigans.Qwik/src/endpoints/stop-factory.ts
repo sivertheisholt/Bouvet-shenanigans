@@ -1,9 +1,9 @@
 import { CustomClientAxiosInstance } from "./custom-client-fetcher";
 
-export const startFactory = async (id: number) => {
+export const stopFactory = async (id: number) => {
   const axiosInstance = new CustomClientAxiosInstance();
   return await axiosInstance.instance
-    .patch(`api/factories/activate?id=` + id)
+    .patch(`api/factories/deactivate?id=` + id)
     .then((resp: any) => {
       return resp.data;
     });

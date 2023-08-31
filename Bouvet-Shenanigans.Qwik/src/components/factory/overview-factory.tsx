@@ -1,11 +1,17 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, $, useStore } from "@builder.io/qwik";
 import Gauge from "../starter/gauge";
 import { PowerButton } from "../buttons/power-button";
 import { useFactoriesData } from "~/routes";
+import { startFactory } from "~/endpoints/start-factory";
+import { stopFactory } from "~/endpoints/stop-factory";
 
 export const OverviewFactory = component$(() => {
   const factories = useFactoriesData();
-
+  const factoriesStore = useStore({ factories: factories.value });
+  const startFactoryFunction = $((id: number) => {
+    factoriesStore.factories[id].active ? stopFactory(id) : startFactory(id);
+    factoriesStore.factories[id].active = !factoriesStore.factories[id].active;
+  });
   return (
     <div
       style={{
@@ -46,12 +52,16 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={parseInt(factories.value[0].capacity.toFixed(1))}
+              value={parseInt(factoriesStore.factories[0].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
             <div style={{ textAlign: "center", paddingLeft: "20px" }}>
-              <PowerButton />
+              <PowerButton
+                onClickFunc={$(() => {
+                  startFactoryFunction(0);
+                })}
+              />
               <p style={{ fontSize: "1.5rem", textAlign: "center" }}>Current</p>
               <p
                 style={{
@@ -60,7 +70,7 @@ export const OverviewFactory = component$(() => {
                   textDecoration: "underline",
                 }}
               >
-                1 Tonn /h
+                {factoriesStore.factories[0].active ? 1 : 0} Ton /h
               </p>
             </div>
           </div>
@@ -86,7 +96,11 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <div style={{ textAlign: "center", paddingRight: "20px" }}>
-              <PowerButton />
+              <PowerButton
+                onClickFunc={$(() => {
+                  startFactoryFunction(1);
+                })}
+              />
               <p style={{ fontSize: "1.5rem", textAlign: "center" }}>Current</p>
               <p
                 style={{
@@ -95,11 +109,11 @@ export const OverviewFactory = component$(() => {
                   textDecoration: "underline",
                 }}
               >
-                1 Tonn /h
+                {factoriesStore.factories[1].active ? 1 : 0} Ton /h
               </p>
             </div>
             <Gauge
-              value={parseInt(factories.value[1].capacity.toFixed(1))}
+              value={parseInt(factoriesStore.factories[1].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -136,12 +150,16 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={parseInt(factories.value[2].capacity.toFixed(1))}
+              value={parseInt(factoriesStore.factories[2].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />
             <div style={{ textAlign: "center", paddingLeft: "20px" }}>
-              <PowerButton />
+              <PowerButton
+                onClickFunc={$(() => {
+                  startFactoryFunction(2);
+                })}
+              />
               <p style={{ fontSize: "1.5rem", textAlign: "center" }}>Current</p>
               <p
                 style={{
@@ -150,7 +168,7 @@ export const OverviewFactory = component$(() => {
                   textDecoration: "underline",
                 }}
               >
-                1 Tonn /h
+                {factoriesStore.factories[2].active ? 1 : 0} Ton /h
               </p>
             </div>
           </div>
@@ -176,7 +194,11 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <div style={{ textAlign: "center", paddingRight: "20px" }}>
-              <PowerButton />
+              <PowerButton
+                onClickFunc={$(() => {
+                  startFactoryFunction(3);
+                })}
+              />
               <p style={{ fontSize: "1.5rem", textAlign: "center" }}>Current</p>
               <p
                 style={{
@@ -185,11 +207,11 @@ export const OverviewFactory = component$(() => {
                   textDecoration: "underline",
                 }}
               >
-                1 Tonn /h
+                {factoriesStore.factories[3].active ? 1 : 0} Ton /h
               </p>
             </div>
             <Gauge
-              value={parseInt(factories.value[3].capacity.toFixed(1))}
+              value={parseInt(factoriesStore.factories[3].capacity.toFixed(1))}
               maxValueMultiplier={35}
               text="Tonn"
             />

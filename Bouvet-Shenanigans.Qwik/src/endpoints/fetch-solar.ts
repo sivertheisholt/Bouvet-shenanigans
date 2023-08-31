@@ -1,8 +1,11 @@
-import { customAxios } from "~/api/custom-axios";
+import type { RequestEventLoader } from "@builder.io/qwik-city";
+import { CustomServerAxiosInstance } from "./custom-server-fetcher";
 
-export const fetchSolar = async (token: string, baseUrl: string) => {
-  const customAxiosClient = customAxios(token, baseUrl);
-  return await customAxiosClient
+export const fetchSolar = async (
+  requestEvent: RequestEventLoader<QwikCityPlatform>
+) => {
+  const axiosInstance = new CustomServerAxiosInstance(requestEvent);
+  return await axiosInstance.instance
     .get(`api/electricity/solar`)
     .then((resp: any) => {
       return resp.data;
