@@ -1,0 +1,15 @@
+.wrapperAccount {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.accountText {
+    margin-bottom: 50px;
+}
+
+.accountBalanceText {
+    border-bottom: 10px double #000;
+    padding-bottom: 10px;
+}

@@ -1,0 +1,15 @@
+.font_size_s {
+    font-size: 1rem;
+}
+
+.font_size_m {
+    font-size: 2rem;
+}
+
+.font_size_b {
+    font-size: 3rem;
+}
+
+.text_center {
+    text-align: center;
+}

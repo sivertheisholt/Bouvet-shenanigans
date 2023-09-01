@@ -3,8 +3,8 @@ import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { OverviewElectricity } from "~/components/electricity/overview-electricity";
 import { OverviewFactory } from "~/components/factory/overview-factory";
 
-import Hero from "~/components/starter/hero/hero";
-import Starter from "~/components/starter/next-steps/next-steps";
+import Hero from "~/components/hero/hero";
+import OverViewAccount from "~/components/account/overview-account";
 import { fetchCoalPlants } from "~/endpoints/server/fetch-coal-plants";
 import { fetchFactories } from "~/endpoints/server/fetch-factories";
 import { fetchSolar } from "~/endpoints/server/fetch-solar";
@@ -40,7 +40,7 @@ export default component$(() => {
   return (
     <>
       <Hero />
-      <Starter />
+      <OverViewAccount />
 
       <div role="presentation" class="ellipsis"></div>
       <div role="presentation" class="ellipsis ellipsis-purple"></div>

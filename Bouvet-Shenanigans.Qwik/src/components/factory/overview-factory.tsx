@@ -1,14 +1,22 @@
-import { component$, $, useStore, useVisibleTask$, useSignal } from "@builder.io/qwik";
-import Gauge from "../starter/gauge";
+import {
+  component$,
+  $,
+  useStore,
+  useVisibleTask$,
+  useSignal,
+} from "@builder.io/qwik";
+import Gauge from "../gauge";
 import { PowerButton } from "../buttons/power-button";
 import { useFactoriesData } from "~/routes";
 import { startFactory } from "~/endpoints/client/start-factory";
 import { stopFactory } from "~/endpoints/client/stop-factory";
 import { fetchFactories } from "~/endpoints/client/fetch-factories";
 
+import styles from "./overview-factory.module.css";
+
 export const OverviewFactory = component$(() => {
   const factoriesStore = useStore({ factories: useFactoriesData().value });
-  const isFetchingData = useSignal(false)
+  const isFetchingData = useSignal(false);
 
   const startFactoryFunction = $((id: number) => {
     factoriesStore.factories[id].active ? stopFactory(id) : startFactory(id);
@@ -17,44 +25,20 @@ export const OverviewFactory = component$(() => {
 
   // Refetched factories data fevery 10 seconds
   useVisibleTask$(() => {
-    if(!isFetchingData.value)
-    {
+    if (!isFetchingData.value) {
       isFetchingData.value = true;
       setInterval(async () => {
         factoriesStore.factories = await fetchFactories();
-      }, 10000)
+      }, 10000);
     }
-  })
+  });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        padding: "50px",
-      }}
-    >
+    <div class={styles.wrapper}>
       <h1>Factories</h1>
 
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "row",
-          columnGap: "300px",
-        }}
-      >
-        <div
-          style={{
-            width: "50%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+      <div class={styles.wrapper_row}>
+        <div class={styles.wrapper_row_wrapper}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>
             Organic fertilizers
           </p>
@@ -66,7 +50,9 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={parseFloat(factoriesStore.factories[0].capacity.toFixed(1))}
+              value={parseFloat(
+                factoriesStore.factories[0].capacity.toFixed(1)
+              )}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -90,15 +76,7 @@ export const OverviewFactory = component$(() => {
           </div>
         </div>
 
-        <div
-          style={{
-            width: "50%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <div class={styles.wrapper_row_wrapper}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>
             Organic seeds and seedlings
           </p>
@@ -127,7 +105,9 @@ export const OverviewFactory = component$(() => {
               </p>
             </div>
             <Gauge
-              value={parseFloat(factoriesStore.factories[1].capacity.toFixed(1))}
+              value={parseFloat(
+                factoriesStore.factories[1].capacity.toFixed(1)
+              )}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -135,24 +115,8 @@ export const OverviewFactory = component$(() => {
         </div>
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "row",
-          columnGap: "300px",
-        }}
-      >
-        <div
-          style={{
-            width: "50%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+      <div class={styles.wrapper_row}>
+        <div class={styles.wrapper_row_wrapper}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>
             Pest and disease control
           </p>
@@ -164,7 +128,9 @@ export const OverviewFactory = component$(() => {
             }}
           >
             <Gauge
-              value={parseFloat(factoriesStore.factories[2].capacity.toFixed(1))}
+              value={parseFloat(
+                factoriesStore.factories[2].capacity.toFixed(1)
+              )}
               maxValueMultiplier={35}
               text="Tonn"
             />
@@ -188,15 +154,7 @@ export const OverviewFactory = component$(() => {
           </div>
         </div>
 
-        <div
-          style={{
-            width: "50%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <div class={styles.wrapper_row_wrapper}>
           <p style={{ fontSize: "2rem", textAlign: "center" }}>
             Soil Amendments
           </p>
@@ -225,7 +183,9 @@ export const OverviewFactory = component$(() => {
               </p>
             </div>
             <Gauge
-              value={parseFloat(factoriesStore.factories[3].capacity.toFixed(1))}
+              value={parseFloat(
+                factoriesStore.factories[3].capacity.toFixed(1)
+              )}
               maxValueMultiplier={35}
               text="Tonn"
             />
