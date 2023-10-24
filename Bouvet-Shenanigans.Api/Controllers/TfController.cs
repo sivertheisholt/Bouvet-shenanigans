@@ -1,6 +1,7 @@
 using Bouvet_Shenanigans.Api.DTOs;
 using Bouvet_Shenanigans.Api.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Bouvet_Shenanigans.Api.Controllers
 {
@@ -8,8 +9,8 @@ namespace Bouvet_Shenanigans.Api.Controllers
     [Route("[controller]")]
     public class TfController : ControllerBase
     {
-        private readonly TfHub _tfHub;
-        public TfController(TfHub tfHub)
+        private readonly IHubContext<TfHub> _tfHub;
+        public TfController(IHubContext<TfHub> tfHub)
         {
             _tfHub = tfHub;
         }
@@ -19,7 +20,7 @@ namespace Bouvet_Shenanigans.Api.Controllers
         {
             try
             {
-                await _tfHub.SendImage(tfDetectionDto);
+                await _tfHub.Clients.All.SendAsync("tfImage", tfDetectionDto);
             }
             catch (System.Exception e)
             {
