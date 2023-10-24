@@ -17,7 +17,16 @@ namespace Bouvet_Shenanigans.Api.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody] TfDetectionDto tfDetectionDto)
         {
-            await _tfHub.SendImage(tfDetectionDto);
+            try
+            {
+                await _tfHub.SendImage(tfDetectionDto);
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+
             return Ok();
         }
     }
