@@ -41,6 +41,7 @@
 </body>
 
 <script>
+  /*
   const registerServiceWorker = async () => {
     if ("serviceWorker" in navigator) {
       await navigator.serviceWorker.register("/sw.js");
@@ -81,7 +82,7 @@
       };
 
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-
+      */
       // Checks if should display install popup notification:
       /*
       if (isMobile && !isInStandaloneMode()) {
@@ -89,6 +90,8 @@
       }
       */
 
+      
+      /*
       if (("PushManager" in window)) {
         if (Notification.permission === "granted") {
           try {
@@ -108,6 +111,8 @@
     }
   };
   registerServiceWorker();
+  */
+  
 </script>
 
 </html>

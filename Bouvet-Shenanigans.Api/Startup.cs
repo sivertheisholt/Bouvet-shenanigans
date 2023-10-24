@@ -54,7 +54,7 @@ namespace Bouvet_Shenanigans.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

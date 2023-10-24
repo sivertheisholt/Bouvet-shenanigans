@@ -4,17 +4,15 @@ import Connector from "../signalr-connection";
 export interface TensorFlowProps {}
 
 const TensorFlowComponent = (props: TensorFlowProps) => {
-  const { newMessage, events } = Connector();
-  const [message, setMessage] = useState();
+  const { events } = Connector();
+  const [message, setMessage] = useState<any>();
   useEffect(() => {
     events((data) => setMessage(data));
   });
   return (
-    <div className="App">
-      <span>
-        message from signalR: <span style={{ color: "green" }}>{message}</span>{" "}
-      </span>
-      <br />
+    <div>
+      <h1>Detection: {message && message.detections}</h1>
+      {message && <img src={`data:image/jpg;base64,${message.base64}`} />}
     </div>
   );
 };
