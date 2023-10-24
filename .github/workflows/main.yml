@@ -29,8 +29,8 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
-        working-directory: ./Bouvet-Shenanigans.Qwik
-      - run: cd ./Bouvet-Shenanigans.Qwik; npm run build;
+        working-directory: ./Bouvet-Shenanigans.Web
+      - run: cd ./Bouvet-Shenanigans.Web; npm run build;
 
       # Run dotnet build and publish
       - name: dotnet build and publish
