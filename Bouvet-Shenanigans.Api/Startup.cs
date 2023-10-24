@@ -62,7 +62,7 @@ namespace Bouvet_Shenanigans.Api
             app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055", "http://localhost:5173")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials().AllowAnyOrigin());
+                .AllowCredentials());
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
