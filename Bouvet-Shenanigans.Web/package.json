@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "BUILD_PATH='../myapp/wwwroot' react-scripts build",
+    "build": "BUILD_PATH='../myapp/wwwroot' NODE_ENV=production react-scripts build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
