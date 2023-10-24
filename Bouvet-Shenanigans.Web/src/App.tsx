@@ -1,14 +1,8 @@
-import React, { useState } from "react"
-import { Routing } from "./Routing"
-import AuthContextProvider from "./Context/AuthContextProvider"
-
-
+import React, { useState } from "react";
+import { Routing } from "./Routing";
 
 const AppComponent = () => {
-    let [ isAuthenticated, setAuthenticated ] = useState(false);
-    
+  return <Routing />;
+};
 
-    return <Routing/>
-}
-
-export const App = React.memo(AppComponent)
+export const App = React.memo(AppComponent);
