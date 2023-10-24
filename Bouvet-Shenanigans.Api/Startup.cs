@@ -11,6 +11,8 @@ namespace Bouvet_Shenanigans.Api
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+            services.AddSingleton<TfHub>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<DataContext>(options =>
