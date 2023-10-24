@@ -1,9 +1,7 @@
 using Bouvet_Shenanigans.Api.Data;
 using Bouvet_Shenanigans.Api.Interfaces;
+using Bouvet_Shenanigans.Api.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
 
 namespace Bouvet_Shenanigans.Api
 {
@@ -34,6 +32,7 @@ namespace Bouvet_Shenanigans.Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddHealthChecks();
+            services.AddSignalR();
 
             return Task.CompletedTask;
         }
@@ -68,6 +67,8 @@ namespace Bouvet_Shenanigans.Api
             app.UseStaticFiles();
 
             app.MapControllers();
+
+            app.MapHub<TfHub>("/hub");
 
             return Task.CompletedTask;
         }
