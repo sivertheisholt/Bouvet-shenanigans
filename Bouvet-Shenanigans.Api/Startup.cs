@@ -66,6 +66,8 @@ namespace Bouvet_Shenanigans.Api
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.MapFallbackToFile("index.html");
+
             app.MapControllers();
 
             app.MapHub<TfHub>("/hub");
