@@ -11,7 +11,7 @@ const TensorFlowComponent = (props: TensorFlowProps) => {
   });
   return (
     <div>
-      <h1>Detection: {message && message.detections}</h1>
+      <h1>People: {message && message.detections}</h1>
       {message && <img src={`data:image/jpg;base64,${message.base64}`} />}
     </div>
   );
