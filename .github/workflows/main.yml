@@ -58,8 +58,8 @@ jobs:
       # Print version number
       - name: Version number
         run: |
-          version=$(${{ steps.version.outputs.project_version }})
-          echo "Using version $version in your build and deploy process"
+          version=${{ steps.version.outputs.project_version }}
+          echo "Using version ${{ steps.version.outputs.project_version }} in your build and deploy process"
 
       # Create tag
       - name: Create Git Tag
