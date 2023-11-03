@@ -50,7 +50,7 @@ jobs:
       # Get version from API csproj
       - name: Get version
         id: package_version
-        uses: KageKirin/get-csproj-version@v1
+        uses: KageKirin/get-csproj-version@v0
         with:
           file: ./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj
 
