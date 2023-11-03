@@ -53,7 +53,7 @@ jobs:
         run: |
           version=$(grep -oPm1 "(?<=<Version>)[^<]+" "./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj")
           echo "Version from .csproj: $version"
-          echo "::set-output name=project_version::$version"
+          echo "project_version={$version}" >> $GITHUB_OUTPUT
 
       # Print version number
       - name: Version number
