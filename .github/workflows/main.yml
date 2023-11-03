@@ -51,8 +51,8 @@ jobs:
       - name: Retrieve Version from .csproj
         id: version
         run: |
-          $csprojPath = "./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj"
-          $version = [xml] (Get-Content $csprojPath).Project.PropertyGroup.Version
+          $csprojPath="./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj"
+          $version=[xml] (Get-Content $csprojPath).Project.PropertyGroup.Version
           echo "Version from .csproj: $version"
           echo "::set-output name=project_version::$version"
 
