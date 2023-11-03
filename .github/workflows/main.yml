@@ -48,16 +48,24 @@ jobs:
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp"
           
       # Get version from API csproj
-      - name: Get version
-        id: package_version
-        uses: KageKirin/get-csproj-version@v0
-        with:
-          file: ./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj
+      - name: Retrieve Version from .csproj
+        id: version
+        run: |
+          $csprojPath = "./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj"
+          $version = [xml] (Get-Content $csprojPath).Project.PropertyGroup.Version
+          echo "Version from .csproj: $version"
+          echo "::set-output name=project_version::$version"
+
+      # Print version number
+      - name: Version number
+        run: |
+          version=$(${{ steps.version.outputs.project_version }})
+          echo "Using version $version in your build and deploy process"
 
       # Create tag
       - name: Create Git Tag
         run: |
-          TAG_NAME=v${{ steps.test.package_version.version }}
+          TAG_NAME=v${{ steps.version.outputs.project_version }}
 
           git tag $TAG_NAME
 
@@ -67,4 +75,4 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           body: ""
-          tag: v${{ steps.test.package_version.version }}
+          tag: v${{ steps.version.outputs.project_version }}
