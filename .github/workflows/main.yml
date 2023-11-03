@@ -57,7 +57,7 @@ jobs:
       # Create tag
       - name: Create Git Tag
         run: |
-          TAG_NAME=v${{ steps.package_version.version }}
+          TAG_NAME=v${{ steps.test.package_version.version }}
 
           git tag $TAG_NAME
 
@@ -67,4 +67,4 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           body: ""
-          tag: v${{ steps.package_version.version }}
+          tag: v${{ steps.test.package_version.version }}
