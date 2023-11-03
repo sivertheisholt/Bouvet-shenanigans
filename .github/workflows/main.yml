@@ -46,17 +46,12 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp"
-
-      - name: List Files in Directory
-        run: |
-          ls -R
           
       # Get version from API csproj
       - name: Retrieve Version from .csproj
         id: version
         run: |
-          $csprojPath="./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj"
-          $version=[xml] (Get-Content $csprojPath).Project.PropertyGroup.Version
+          version=$(grep -oPm1 "(?<=<Version>)[^<]+" "./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj")
           echo "Version from .csproj: $version"
           echo "::set-output name=project_version::$version"
 
