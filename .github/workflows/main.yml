@@ -75,3 +75,4 @@ jobs:
         with:
           body: ""
           tag: v${{ steps.version.outputs.project_version }}
+          generateReleaseNotes: true
