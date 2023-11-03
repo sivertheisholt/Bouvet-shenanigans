@@ -46,3 +46,25 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp"
+          
+      # Get version from API csproj
+      - name: Get version
+        id: package_version
+        uses: KageKirin/get-csproj-version@v1
+        with:
+          file: ./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj
+
+      # Create tag
+      - name: Create Git Tag
+        run: |
+          TAG_NAME=v${{ steps.package_version.version }}
+
+          git tag $TAG_NAME
+
+          git push origin $TAG_NAME
+
+      # Create release
+      - uses: ncipollo/release-action@v1
+        with:
+          body: ""
+          tag: v${{ steps.package_version.version }}
