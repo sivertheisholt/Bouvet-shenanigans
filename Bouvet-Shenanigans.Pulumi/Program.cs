@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Pulumi;
+
+namespace Bouvet_Shenanigans.Pulumi
+{
+  class Program
+  {
+    static Task<int> Main() => Deployment.RunAsync<MyStack>();
+  }
+}
