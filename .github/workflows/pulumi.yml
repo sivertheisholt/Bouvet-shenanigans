@@ -29,6 +29,8 @@ jobs:
           work-dir: ./Bouvet-Shenanigans.Pulumi
           command: preview
           stack-name: sivertheisholt/BouvetShenanigans.Pulumi/dev # When using an individual account, only use stack-name.
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Deploy pulumi
         uses: pulumi/actions@v3
