@@ -27,15 +27,6 @@ namespace Bouvet_Shenanigans.Pulumi
                         Name = names.Item2,
                         ResourceGroupName = names.Item1
                     }));
-
-            // Export the publishing credentials
-            PublishingUser = credentials.Apply(c => c.PublishingUserName);
-            PublishingPassword = credentials.Apply(c => c.PublishingPassword);
         }
-
-        [Output]
-        public Output<string> PublishingUser { get; set; }
-        [Output]
-        public Output<string> PublishingPassword { get; set; }
     }
 }
