@@ -23,11 +23,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - run: cd ./Bouvet-Shenanigans.Pulumi;
-
       - name: Deploy pulumi
         uses: pulumi/actions@v3
         with:
+          work-dir: ./Bouvet-Shenanigans.Pulumi
           command: up
           stack-name: sivertheisholt/BouvetShenanigans.Pulumi/dev
           # When using an individual account, only use stack-name.
