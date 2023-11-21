@@ -23,6 +23,8 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - run: cd ./Bouvet-Shenanigans.Pulumi;
+
       - name: Deploy pulumi
         uses: pulumi/actions@v3
         with:
