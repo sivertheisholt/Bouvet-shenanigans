@@ -18,15 +18,6 @@ namespace Bouvet_Shenanigans.Pulumi
             {
                 ResourceGroupName = resourceGroup.Name,
             });
-
-            // Get the publishing credentials for the created Web App
-            var credentials = Output.Tuple(resourceGroup.Name, webApp.Name).Apply(names =>
-                ListWebAppPublishingCredentials.InvokeAsync(
-                    new ListWebAppPublishingCredentialsArgs
-                    {
-                        Name = names.Item2,
-                        ResourceGroupName = names.Item1
-                    }));
         }
     }
 }
