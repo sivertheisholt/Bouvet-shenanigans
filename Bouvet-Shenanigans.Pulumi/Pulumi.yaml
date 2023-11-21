@@ -1,0 +1,4 @@
+name: BouvetShenanigans.Pulumi
+runtime:
+  name: dotnet
+description: A precompiled .NET Pulumi program

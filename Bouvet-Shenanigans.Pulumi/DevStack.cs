@@ -4,9 +4,9 @@ using Pulumi.AzureNative.Web;
 
 namespace Bouvet_Shenanigans.Pulumi
 {
-    public class MyStack : Stack
+    public class DevStack : Stack
     {
-        public MyStack()
+        public DevStack()
         {
             // Create an Azure Resource Group
             var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
