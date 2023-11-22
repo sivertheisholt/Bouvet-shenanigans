@@ -29,7 +29,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az account show
+            az login
 
       - name: Deploy pulumi
         uses: pulumi/actions@v3
