@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "./Bouvet-Shenanigans.Pulumi/*"
-      - "./.github/workflows/*"
+      - "Bouvet-Shenanigans.Pulumi/*"
+      - ".github/workflows/*"
 
 permissions:
   id-token: write
