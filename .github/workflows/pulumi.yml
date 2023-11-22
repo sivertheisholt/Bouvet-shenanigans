@@ -22,14 +22,8 @@ jobs:
       - name: Azure login
         uses: azure/login@v1
         with:
+          enable-AzPSSession: true
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Azure CLI script
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az login
 
       - name: Deploy pulumi
         uses: pulumi/actions@v3
