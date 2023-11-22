@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "Bouvet-Shenanigans.Pulumi/*"
-      - ".github/workflows/*"
+      - ".github/workflows/pulumi.yml"
 
 permissions:
   id-token: write

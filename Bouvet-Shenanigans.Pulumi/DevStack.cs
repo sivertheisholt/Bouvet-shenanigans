@@ -1,4 +1,6 @@
 using Pulumi;
+using Pulumi.AzureNative.ContainerInstance;
+using Pulumi.AzureNative.ContainerInstance.Inputs;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.Web;
 
@@ -9,34 +11,40 @@ namespace Bouvet_Shenanigans.Pulumi
         public DevStack()
         {
             // Create an Azure Resource Group
-            var resourceGroup = new ResourceGroup("resourceGroup", new ResourceGroupArgs
+            var resourceGroup = new ResourceGroup("Testing", new ResourceGroupArgs
             {
                 Location = "West Europe",
             });
 
-            var webApp = new WebApp("BouvetShenanigansWebApp", new WebAppArgs
+            var testingContainerGroup = new ContainerGroup("TestingContainerGroup", new ContainerGroupArgs
             {
                 ResourceGroupName = resourceGroup.Name,
-            });
-
-
-            // Get the publishing credentials for the created Web App
-            var credentials = Output.Tuple(resourceGroup.Name, webApp.Name).Apply(names =>
-                ListWebAppPublishingCredentials.InvokeAsync(
-                    new ListWebAppPublishingCredentialsArgs
+                /*
+                Containers =
+                {
+                new ContainerArgs
+                {
+                    Name = "myapp",
+                    Image = "myacr.azurecr.io/myapp:v1",
+                    Resources = new ResourceRequirementsArgs
                     {
-                        Name = names.Item2,
-                        ResourceGroupName = names.Item1
-                    }));
-
-            // Export the publishing credentials
-            PublishingUser = credentials.Apply(c => c.PublishingUserName);
-            PublishingPassword = credentials.Apply(c => c.PublishingPassword);
+                        Requests = new ResourceRequestsArgs
+                        {
+                            Cpu = 1,
+                            MemoryInGB = 1.5,
+                        }
+                    },
+                    Ports = { new ContainerPortArgs { Port = 80 } },
+                    }
+                },
+                */
+                OsType = OperatingSystemTypes.Linux,
+                IpAddress = new IpAddressArgs
+                {
+                    Ports = { new PortArgs { Port = 80, Protocol = "TCP" } },
+                    Type = "Public",
+                },
+            });
         }
-
-        [Output]
-        public Output<string> PublishingUser { get; set; }
-        [Output]
-        public Output<string> PublishingPassword { get; set; }
     }
 }
