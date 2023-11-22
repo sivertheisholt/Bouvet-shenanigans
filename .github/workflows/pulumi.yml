@@ -19,16 +19,11 @@ jobs:
         with:
           dotnet-version: 6.x
 
-      - name: Azure login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - uses: pulumi/actions@v3
         with:
           work-dir: ./Bouvet-Shenanigans.Pulumi
           command: preview
-          stack-name: sivertheisholt/BouvetShenanigans.Pulumi/dev # When using an individual account, only use stack-name.
+          stack-name: sivertheisholt/BouvetShenanigans.Pulumi/dev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -38,6 +33,5 @@ jobs:
           work-dir: ./Bouvet-Shenanigans.Pulumi
           command: up
           stack-name: sivertheisholt/BouvetShenanigans.Pulumi/dev
-          # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
