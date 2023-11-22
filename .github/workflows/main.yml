@@ -5,6 +5,11 @@ permissions: write-all
 on:
   workflow_dispatch:
   push:
+    branches:
+      - "main"
+    paths:
+      - "./Bouvet-Shenanigans.Api/*"
+      - "./Bouvet-Shenanigans.Web/*"
 
 env:
   AZURE_WEBAPP_NAME: bouvet-shenanigans # set this to your application's name
