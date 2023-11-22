@@ -34,4 +34,4 @@ jobs:
           # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_CONFIG: "{}"
+          PULUMI_CONFIG: '{"azure-native:location":"West Europe"}'
