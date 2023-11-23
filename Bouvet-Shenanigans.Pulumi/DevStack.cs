@@ -16,28 +16,31 @@ namespace Bouvet_Shenanigans.Pulumi
                 Location = "West Europe",
             });
 
-            var testingContainerGroup = new ContainerGroup("TestingContainerGroup", new ContainerGroupArgs
+            ContainerArgs webApi = new ContainerArgs
             {
-                ResourceGroupName = resourceGroup.Name,
-                /*
-                Containers =
+                Name = "BouvetShenanigansApi",
+                Image = "sivertheisholt.azurecr.io/myapp:v1",
+                Resources = new ResourceRequirementsArgs
                 {
-                new ContainerArgs
-                {
-                    Name = "myapp",
-                    Image = "myacr.azurecr.io/myapp:v1",
-                    Resources = new ResourceRequirementsArgs
+                    Requests = new ResourceRequestsArgs
                     {
-                        Requests = new ResourceRequestsArgs
-                        {
-                            Cpu = 1,
-                            MemoryInGB = 1.5,
-                        }
-                    },
-                    Ports = { new ContainerPortArgs { Port = 80 } },
+                        Cpu = 1,
+                        MemoryInGB = 1.5,
                     }
                 },
-                */
+                Ports = {
+                            new ContainerPortArgs { Port = 80 }
+                        }
+            };
+
+            var bouvetShenanigansContainerGroup = new ContainerGroup("BouvetShenanigansContainerGroup", new ContainerGroupArgs
+            {
+                ResourceGroupName = resourceGroup.Name,
+
+                Containers =
+                {
+                    webApi
+                },
                 OsType = OperatingSystemTypes.Linux,
                 IpAddress = new IpAddressArgs
                 {
