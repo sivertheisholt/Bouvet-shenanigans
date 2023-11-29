@@ -12,7 +12,14 @@ const TextInputComponent = ({
 	className = "",
 }: TextInputProps) => {
 	className += " form-control"
-	return <textarea value={value} className={className} aria-label="With textarea" />
+	return (
+		<textarea
+			value={value}
+			className={className}
+			onChange={onChange}
+			aria-label="With textarea"
+		/>
+	)
 }
 
 export const TextInput = React.memo(TextInputComponent)

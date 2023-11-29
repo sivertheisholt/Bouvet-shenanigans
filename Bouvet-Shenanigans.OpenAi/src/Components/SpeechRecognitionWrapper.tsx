@@ -37,18 +37,27 @@ const SpeechRecognitionWrapperComponent = ({
 			<h1 style={{ textAlign: "center" }} className=" pt-2 fs-2">
 				Hold for å aktivere
 			</h1>
-			<img
+			<div
 				onMouseDown={startListening}
 				onMouseUp={stopListening}
 				onTouchStart={startListening}
 				onTouchEnd={stopListening}
-				className="pt-4"
-				style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
-				width="30%"
-				src={
-					listening ? "./images/microphone-open.png" : "./images/microphone-closed.png"
-				}
-			/>
+			>
+				<img
+					className="pt-4"
+					style={{
+						display: "block",
+						marginLeft: "auto",
+						marginRight: "auto",
+						zIndex: -1,
+					}}
+					width="30%"
+					src={
+						listening ? "./images/microphone-open.png" : "./images/microphone-closed.png"
+					}
+				/>
+			</div>
+
 			<h1
 				style={{ textAlign: "center" }}
 				className=" mt-4 fs-2 text-decoration-underline"
