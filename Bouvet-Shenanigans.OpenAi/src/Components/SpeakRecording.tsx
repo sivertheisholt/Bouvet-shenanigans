@@ -21,6 +21,7 @@ const SpeakRecordingComponent = ({}: SpeakRecordingProps) => {
 				onClick={() =>
 					SpeechRecognition.startListening({
 						continuous: true,
+						language: "nb-NO",
 					})
 				}
 			>
