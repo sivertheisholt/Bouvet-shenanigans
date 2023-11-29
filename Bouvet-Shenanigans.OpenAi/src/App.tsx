@@ -24,49 +24,49 @@ function App() {
 	}
 
 	const question = `
-		ONLY RESPOND WITH JSON!
-		Your job is to choose the right category using the user input. You shoud also summerize the input from user. The following is existing information:
+		KUN RESPONDER MED JSON!
+		Din jobb er å velge riktig kategori ved å bruke brukerinput. Du skal også oppsummere input fra brukere. Dette er følgende eksisterende informasjon:
 		{
 			"categories": {
-				"functionalFailures": {
+				"funksjonelleFeil": {
 					"id": 1,
-					"description": "Deals with incorrect or malfunctioning features and integration problems."
+					"description": "Omhandler feilaktige eller defekte funksjoner og integrasjonsproblemer."
 				},
-				"performanceFailures": {
+				"ytelsesFeil": {
 					"id": 2,
-					"description": "Involves slow performance, low throughput, and high resource usage."
+					"description": "Innebærer treg ytelse, lav gjennomstrømning og høyt ressursforbruk."
 				},
-				"usabilityFailures": {
+				"brukbarhetsFeil": {
 					"id": 3,
-					"description": "Focuses on user interface issues, poor user experience, and accessibility problems."
+					"description": "Fokuserer på brukergrensesnittproblemer, dårlig brukeropplevelse og tilgjengelighetsproblemer."
 				},
-				"securityFailures": {
+				"sikkerhetsFeil": {
 					"id": 4,
-					"description": "Concerns unauthorized access, data security issues, and non-compliance with security standards."
+					"description": "Gjelder uautorisert tilgang, datasikkerhetsproblemer og ikke-overholdelse av sikkerhetsstandarder."
 				},
-				"reliabilityFailures": {
+				"pålitelighetsFeil": {
 					"id": 5,
-					"description": "Related to frequent system crashes, data loss or inconsistency, and redundancy issues."
+					"description": "Relatert til hyppige systemkrasj, datatap eller inkonsekvens, og redundansproblemer."
 				},
-				"compatibilityFailures": {
+				"kompatibilitetsFeil": {
 					"id": 6,
-					"description": "Involves issues across different systems, software conflicts, and environment-specific problems."
+					"description": "Innebærer problemer på tvers av forskjellige systemer, programvarekonflikter og miljøspesifikke problemer."
 				},
-				"scalabilityFailures": {
+				"skalerbarhetsFeil": {
 					"id": 7,
-					"description": "Deals with the system's inability to handle increased load or performance degradation under scale."
+					"description": "Omhandler systemets manglende evne til å håndtere økt belastning eller ytelsesnedgang under skalering."
 				},
-				"maintainabilityFailures": {
+				"vedlikeholdsFeil": {
 					"id": 8,
-					"description": "Focuses on challenges in updating systems, poor documentation, and high technical debt."
+					"description": "Fokuserer på utfordringer med å oppdatere systemer, dårlig dokumentasjon og høy teknisk gjeld."
 				},
-				"regulatoryComplianceFailures": {
+				"regulatoriskeOverholdelsesFeil": {
 					"id": 9,
-					"description": "Involves non-compliance with legal or industry standards and privacy issues."
+					"description": "Innebærer ikke-overholdelse av juridiske eller bransjestandarder og personvernproblemer."
 				},
-				"environmentalFailures": {
+				"miljømessigeFeil": {
 					"id": 10,
-					"description": "Concerns failures due to physical conditions, hardware issues, and infrastructure problems like power or connectivity."
+					"description": "Gjelder feil på grunn av fysiske forhold, maskinvareproblemer og infrastrukturproblemer som strøm eller tilkoblingsproblemer."
 				}
 			}
 		}
@@ -77,12 +77,18 @@ function App() {
 			"summary": <value here>
 		}
 
-		User input: 
+		Brukerinput: 
 	`
 
 	const sendChat = async () => {
 		setIsLoadingData(true)
-		let finalQuestion = question + transcript
+		let finalQuestion =
+			question +
+			(transcript == ""
+				? "Systemet har brent ned og har problem med oppstart på grunn av varme"
+				: transcript)
+
+		console.log(finalQuestion)
 		let jsonString: string = JSON.stringify({
 			model: "gpt-4",
 			messages: [{ role: "user", content: finalQuestion }],
@@ -109,7 +115,7 @@ function App() {
 			) : (
 				<div className="px-5 py-3">
 					<h1>Hva har skjedd?</h1>
-					<div className="mt-2 alert alert-info" role="alert">
+					<div className="mt-4 alert alert-info" role="alert">
 						Bruk tale til tekst funksjonen så vil systemet foreslå riktig kategori og lage
 						en oppsummert beskrivelse
 					</div>
@@ -131,6 +137,10 @@ function App() {
 
 					<div className="pt-4">
 						<TextInput value={data ? data.summary : ""} />
+					</div>
+					<div className="pt-4">
+						<Button title="Start på nytt" />
+						<Button title="Lagre" />
 					</div>
 				</div>
 			)}
