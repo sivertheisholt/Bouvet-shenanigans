@@ -9,7 +9,6 @@ export interface SpeechRecognitionWrapperProps {
 }
 
 const SpeechRecognitionWrapperComponent = ({
-	isRecording,
 	setTranscript,
 	isDoneCb,
 }: SpeechRecognitionWrapperProps) => {
@@ -24,25 +23,44 @@ const SpeechRecognitionWrapperComponent = ({
 		return <span>Browser doesn't support speech recognition.</span>
 	}
 
-	if (isRecording) {
-		SpeechRecognition.startListening({
-			continuous: true,
-			language: "nb-NO",
-		})
-	}
-
 	const stopRecording = () => {
 		SpeechRecognition.stopListening()
 		isDoneCb()
 	}
 
+	const startListening = () =>
+		SpeechRecognition.startListening({ continuous: true, language: "nb-NO" })
+	const stopListening = () => SpeechRecognition.stopListening()
+
 	return (
 		<div>
-			<p>Microphone: {listening ? "on" : "off"}</p>
-			<Button onClick={stopRecording} title="Ferdig" />
-			<Button onClick={resetTranscript} title="Start på nytt" />
-			<Button title="Avbryt" />
+			<h1 style={{ textAlign: "center" }} className=" pt-2 fs-2">
+				Hold for å aktivere
+			</h1>
+			<img
+				onMouseDown={startListening}
+				onMouseUp={stopListening}
+				onTouchStart={startListening}
+				onTouchEnd={stopListening}
+				className="pt-4"
+				style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
+				width="30%"
+				src={
+					listening ? "./images/microphone-open.png" : "./images/microphone-closed.png"
+				}
+			/>
+			<h1
+				style={{ textAlign: "center" }}
+				className=" mt-4 fs-2 text-decoration-underline"
+			>
+				Resultat
+			</h1>
 			<p>{transcript}</p>
+
+			<div className="pt-4">
+				<Button className="fs-5" onClick={stopRecording} title="Ferdig" />
+				<Button className="fs-5" onClick={resetTranscript} title="Start på nytt" />
+			</div>
 		</div>
 	)
 }

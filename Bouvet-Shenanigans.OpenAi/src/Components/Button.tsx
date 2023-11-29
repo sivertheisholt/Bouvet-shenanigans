@@ -3,11 +3,13 @@ import React from "react"
 export interface ButtonProps {
 	title: string
 	onClick?: () => unknown
+	className?: string
 }
 
-const ButtonComponent = ({ title, onClick = () => {} }: ButtonProps) => {
+const ButtonComponent = ({ title, onClick = () => {}, className = "" }: ButtonProps) => {
+	className += " btn btn-primary"
 	return (
-		<button onClick={onClick} className="btn btn-primary">
+		<button className={className} onClick={onClick}>
 			{title}
 		</button>
 	)

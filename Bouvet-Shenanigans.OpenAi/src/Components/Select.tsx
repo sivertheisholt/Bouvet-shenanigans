@@ -9,13 +9,20 @@ export interface SelectProps {
 	items: Array<SelectItem>
 	selectedId: number
 	onChange?: () => unknown
+	className?: string
 }
 
-const SelectComponent = ({ items, selectedId, onChange = () => {} }: SelectProps) => {
+const SelectComponent = ({
+	items,
+	selectedId,
+	onChange = () => {},
+	className = "",
+}: SelectProps) => {
+	className += " form-select"
 	return (
 		<select
 			value={selectedId}
-			className="form-select"
+			className={className}
 			aria-label="Default select example"
 			onChange={onChange}
 		>
