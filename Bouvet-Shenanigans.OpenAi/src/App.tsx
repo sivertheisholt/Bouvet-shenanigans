@@ -3,20 +3,25 @@ import "./App.css"
 import { Button } from "./Components/Button"
 import { Select } from "./Components/Select"
 import { TextInput } from "./Components/TextInput"
-import { MessageHistory } from "./Types/Hooks/MessageHistory"
 import { useChatGpt } from "./Hooks/ChatGpt"
 import { categories } from "./Static/categories"
 import { ChatGptResponseSchemaDto } from "./Types/Hooks/ChatGptResponseSchemaDto"
-import { SpeakRecording } from "./Components/SpeakRecording"
+import { SpeechRecognitionWrapper } from "./Components/SpeechRecognitionWrapper"
 
 function App() {
-	const [messages] = useState<Array<MessageHistory>>([
-		{ message: "Hello there", role: "user" },
-	])
 	const getChat = useChatGpt()
+
 	const [selectedCategory, setSelectedCategory] = useState<number>(0)
+	const [data, setData] = useState<ChatGptResponseSchemaDto>()
 	const [summary, setSummary] = useState<string>("")
 	const [isRecording, setIsRecording] = useState(false)
+	const [transcript, setTranscript] = useState("")
+	const [isLoadingData, setIsLoadingData] = useState(false)
+
+	const isDoneRecording = () => {
+		setIsRecording(false)
+		sendChat()
+	}
 
 	const question = `
 		ONLY RESPOND WITH JSON!
@@ -72,37 +77,35 @@ function App() {
 			"summary": <value here>
 		}
 
-		User input: The new system doesnt look compatible with the current system so the system failed after installation.
+		User input: 
 	`
 
 	const sendChat = async () => {
-		const finalMessage = messages.map((item) => ({
-			role: item.role,
-			content: item.message,
-		}))
-
-		let jsonString: string
-		if (messages.length === 1) {
-			jsonString = JSON.stringify({
-				model: "gpt-4",
-				messages: [{ role: "user", content: question }],
-			})
-		} else {
-			jsonString = JSON.stringify({
-				model: "gpt-4",
-				messages: finalMessage,
-			})
-		}
+		setIsLoadingData(true)
+		let finalQuestion = question + transcript
+		let jsonString: string = JSON.stringify({
+			model: "gpt-4",
+			messages: [{ role: "user", content: finalQuestion }],
+		})
 		const res = await getChat.mutateAsync(jsonString)
+		console.log(res)
 		const resObj = JSON.parse(res.choices[0].message.content) as ChatGptResponseSchemaDto
-		setSelectedCategory(resObj.categoryId)
-		setSummary(resObj.summary)
+		setData(resObj)
+		setIsLoadingData(false)
+	}
+
+	if (isLoadingData) {
+		return <>Loading data</>
 	}
 
 	return (
 		<div className="wrapper">
 			{isRecording ? (
-				<SpeakRecording isDone={setIsRecording} isCancel={setIsRecording} />
+				<SpeechRecognitionWrapper
+					isRecording={isRecording}
+					isDoneCb={isDoneRecording}
+					setTranscript={setTranscript}
+				/>
 			) : (
 				<div className="px-5 py-3">
 					<h1>Hva har skjedd?</h1>
@@ -116,7 +119,7 @@ function App() {
 
 					<div className="pt-4">
 						<Select
-							selectedId={selectedCategory}
+							selectedId={data ? data.categoryId : 0}
 							items={categories.categories.map((cat) => {
 								return {
 									displayName: cat.displayName,
@@ -127,7 +130,7 @@ function App() {
 					</div>
 
 					<div className="pt-4">
-						<TextInput value={summary} />
+						<TextInput value={data ? data.summary : ""} />
 					</div>
 				</div>
 			)}

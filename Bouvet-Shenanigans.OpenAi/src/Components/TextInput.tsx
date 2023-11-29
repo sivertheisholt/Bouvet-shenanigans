@@ -9,7 +9,6 @@ const TextInputComponent = ({ value = "", onChange = () => {} }: TextInputProps)
 	return (
 		<div className="input-group">
 			<textarea
-				onChange={onChange}
 				value={value}
 				className="form-control"
 				aria-label="With textarea"
