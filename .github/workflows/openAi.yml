@@ -1,11 +1,12 @@
 name: Azure Static Web Apps CI/CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - "Bouvet-Shenanigans.OpenAi/*"
+      - "Bouvet-Shenanigans.OpenAi/**"
       - ".github/workflows/openAi.yml"
 
 jobs:
