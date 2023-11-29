@@ -1,11 +1,19 @@
 import React from "react"
 
-export interface TextInputProps {}
+export interface TextInputProps {
+	value?: string
+	onChange?: () => unknown
+}
 
-const TextInputComponent = (props: TextInputProps) => {
+const TextInputComponent = ({ value = "", onChange = () => {} }: TextInputProps) => {
 	return (
 		<div className="input-group">
-			<textarea className="form-control" aria-label="With textarea"></textarea>
+			<textarea
+				onChange={onChange}
+				value={value}
+				className="form-control"
+				aria-label="With textarea"
+			></textarea>
 		</div>
 	)
 }

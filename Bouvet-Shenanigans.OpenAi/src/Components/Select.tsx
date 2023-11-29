@@ -1,14 +1,31 @@
 import React from "react"
 
-export interface SelectProps {
-	items: Array<string>
+interface SelectItem {
+	displayName: string
+	id: number
 }
 
-const SelectComponent = ({ items }: SelectProps) => {
+export interface SelectProps {
+	items: Array<SelectItem>
+	selectedId: number
+	onChange?: () => unknown
+}
+
+const SelectComponent = ({ items, selectedId, onChange = () => {} }: SelectProps) => {
 	return (
-		<select className="form-select" aria-label="Default select example">
+		<select
+			value={selectedId}
+			className="form-select"
+			aria-label="Default select example"
+			onChange={onChange}
+		>
+			<option disabled value={0}>
+				Velg kategori
+			</option>
 			{items.map((item) => (
-				<option selected>{item}</option>
+				<option key={item.id} value={item.id}>
+					{item.displayName}
+				</option>
 			))}
 		</select>
 	)
