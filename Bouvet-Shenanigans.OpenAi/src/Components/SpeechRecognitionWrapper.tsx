@@ -57,8 +57,8 @@ const SpeechRecognitionWrapperComponent = ({
 			</h1>
 			<p>{transcript}</p>
 
-			<div className="pt-4">
-				<Button className="fs-5" onClick={stopRecording} title="Ferdig" />
+			<div style={{ textAlign: "center" }} className="pt-4">
+				<Button className="fs-5 me-2" onClick={stopRecording} title="Ferdig" />
 				<Button className="fs-5" onClick={resetTranscript} title="Start på nytt" />
 			</div>
 		</div>
