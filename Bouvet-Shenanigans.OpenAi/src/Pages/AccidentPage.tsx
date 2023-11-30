@@ -26,7 +26,7 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 	}
 
 	const question = `
-		KUN RESPONDER MED JSON!
+		KUN RESPONDER MED JSON IKKE NOE ANNET!
 		Din jobb er å velge riktig kategorier ved å bruke brukerinput. Du skal velge både hovedkategori og subKategori som passer. Du skal også oppsummere input fra brukere. Dersom du ikke finner passende kategori, så setter du id til 0. Dette er følgende eksisterende informasjon:
 		${JSON.stringify(categories)}
 
