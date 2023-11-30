@@ -49,7 +49,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 			) : (
 				<Select
 					className="mt-4"
-					selectedId={data ? data.categoryId : 0}
+					selectedId={data ? data.subCategoryId : 0}
 					items={categories.categories[selectedParentCategory - 1].subCategories.map(
 						(cat) => {
 							return {

@@ -17,6 +17,7 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 	const [data, setData] = useState<ChatGptResponseSchemaDto>({
 		categoryId: 0,
 		summary: "",
+		subCategoryId: 0,
 	})
 
 	const isDoneRecording = () => {
