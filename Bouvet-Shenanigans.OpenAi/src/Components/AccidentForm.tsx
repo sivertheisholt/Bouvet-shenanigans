@@ -11,11 +11,17 @@ export interface AccidentFormProps {
 }
 
 const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
-	const [selectedParentCategory, setSelectedParentCategory] = useState(0)
+	const [, setSelectedParentCategory] = useState(0)
+	const [, setSelectedSubCategory] = useState(0)
 
 	const onChangeParentCategory = (element: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedParentCategory(parseInt(element.target.value))
 		data.categoryId = parseInt(element.target.value)
+	}
+
+	const onChangeSubCategory = (element: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedSubCategory(parseInt(element.target.value))
+		data.subCategoryId = parseInt(element.target.value)
 	}
 
 	return (
@@ -44,20 +50,20 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 					}
 				})}
 			/>
-			{selectedParentCategory == 0 ? (
+
+			{data.categoryId == 0 ? (
 				<></>
 			) : (
 				<Select
+					onChange={onChangeSubCategory}
 					className="mt-4"
 					selectedId={data ? data.subCategoryId : 0}
-					items={categories.categories[selectedParentCategory - 1].subCategories.map(
-						(cat) => {
-							return {
-								displayName: cat.displayName,
-								id: cat.id,
-							}
+					items={categories.categories[data.categoryId - 1].subCategories.map((cat) => {
+						return {
+							displayName: cat.displayName,
+							id: cat.id,
 						}
-					)}
+					})}
 				/>
 			)}
 
