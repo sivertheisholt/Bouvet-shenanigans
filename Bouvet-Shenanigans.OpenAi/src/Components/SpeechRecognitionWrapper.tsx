@@ -1,6 +1,7 @@
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition"
 import { Button } from "./Button"
 import { useEffect } from "react"
+import { url } from "inspector"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
@@ -28,9 +29,15 @@ const SpeechRecognitionWrapperComponent = ({
 		isDoneCb()
 	}
 
-	const startListening = () =>
+	const startListening = (event: any) => {
+		event.preventDefault()
 		SpeechRecognition.startListening({ continuous: true, language: "nb-NO" })
+	}
 	const stopListening = () => SpeechRecognition.stopListening()
+
+	const handleContextMenu = (event: any) => {
+		event.preventDefault()
+	}
 
 	return (
 		<div>
@@ -44,6 +51,7 @@ const SpeechRecognitionWrapperComponent = ({
 				onTouchEnd={stopListening}
 			>
 				<img
+					onContextMenu={handleContextMenu}
 					className="pt-4"
 					style={{
 						display: "block",
