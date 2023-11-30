@@ -3,7 +3,8 @@ import { ChatGptResponseSchemaDto } from "../Types/Hooks/ChatGptResponseSchemaDt
 import { useChatGpt } from "../Hooks/ChatGpt"
 import { SpeechRecognitionWrapper } from "../Components/SpeechRecognitionWrapper"
 import { AccidentForm } from "../Components/AccidentForm"
-import { BeatLoader, DotLoader } from "react-spinners"
+import { BeatLoader } from "react-spinners"
+import { categories } from "../Static/categories"
 
 export interface AccidentPageProps {}
 
@@ -25,54 +26,13 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 
 	const question = `
 		KUN RESPONDER MED JSON!
-		Din jobb er å velge riktig kategori ved å bruke brukerinput. Du skal også oppsummere input fra brukere. Dette er følgende eksisterende informasjon:
-		{
-			"categories": {
-				"funksjonelleFeil": {
-					"id": 1,
-					"description": "Omhandler feilaktige eller defekte funksjoner og integrasjonsproblemer."
-				},
-				"ytelsesFeil": {
-					"id": 2,
-					"description": "Innebærer treg ytelse, lav gjennomstrømning og høyt ressursforbruk."
-				},
-				"brukbarhetsFeil": {
-					"id": 3,
-					"description": "Fokuserer på brukergrensesnittproblemer, dårlig brukeropplevelse og tilgjengelighetsproblemer."
-				},
-				"sikkerhetsFeil": {
-					"id": 4,
-					"description": "Gjelder uautorisert tilgang, datasikkerhetsproblemer og ikke-overholdelse av sikkerhetsstandarder."
-				},
-				"pålitelighetsFeil": {
-					"id": 5,
-					"description": "Relatert til hyppige systemkrasj, datatap eller inkonsekvens, og redundansproblemer."
-				},
-				"kompatibilitetsFeil": {
-					"id": 6,
-					"description": "Innebærer problemer på tvers av forskjellige systemer, programvarekonflikter og miljøspesifikke problemer."
-				},
-				"skalerbarhetsFeil": {
-					"id": 7,
-					"description": "Omhandler systemets manglende evne til å håndtere økt belastning eller ytelsesnedgang under skalering."
-				},
-				"vedlikeholdsFeil": {
-					"id": 8,
-					"description": "Fokuserer på utfordringer med å oppdatere systemer, dårlig dokumentasjon og høy teknisk gjeld."
-				},
-				"regulatoriskeOverholdelsesFeil": {
-					"id": 9,
-					"description": "Innebærer ikke-overholdelse av juridiske eller bransjestandarder og personvernproblemer."
-				},
-				"miljømessigeFeil": {
-					"id": 10,
-					"description": "Gjelder feil på grunn av fysiske forhold, maskinvareproblemer og infrastrukturproblemer som strøm eller tilkoblingsproblemer."
-				}
-			}
-		}
+		Din jobb er å velge riktig kategorier ved å bruke brukerinput. Du skal velge både hovedkategori og subKategori som passer. Du skal også oppsummere input fra brukere. Dersom du ikke finner passende kategori, så setter du id til 0. Dette er følgende eksisterende informasjon:
+		${JSON.stringify(categories)}
+
 		Returner med følgende JSON format:
 		{
 			"categoryId":  <value here>,
+			"subCategoryId": <value here>,
 			"summary": <value here>
 		}
 

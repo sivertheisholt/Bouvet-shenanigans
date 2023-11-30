@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ChangeEventHandler } from "react"
 
 interface SelectItem {
 	displayName: string
@@ -8,7 +8,7 @@ interface SelectItem {
 export interface SelectProps {
 	items: Array<SelectItem>
 	selectedId: number
-	onChange?: () => unknown
+	onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => unknown
 	className?: string
 }
 

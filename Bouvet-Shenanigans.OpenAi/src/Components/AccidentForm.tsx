@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ReactElement, useState } from "react"
 import { Select } from "./Select"
 import { Button } from "./Button"
 import { TextInput } from "./TextInput"
@@ -11,6 +11,13 @@ export interface AccidentFormProps {
 }
 
 const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
+	const [selectedParentCategory, setSelectedParentCategory] = useState(0)
+
+	const onChangeParentCategory = (element: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedParentCategory(parseInt(element.target.value))
+		data.categoryId = parseInt(element.target.value)
+	}
+
 	return (
 		<div className="px-5 py-3 h-100">
 			<h1 className="fs-1">Hva har skjedd?</h1>
@@ -27,6 +34,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 			</div>
 
 			<Select
+				onChange={onChangeParentCategory}
 				className="mt-4"
 				selectedId={data ? data.categoryId : 0}
 				items={categories.categories.map((cat) => {
@@ -36,6 +44,22 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 					}
 				})}
 			/>
+			{selectedParentCategory == 0 ? (
+				<></>
+			) : (
+				<Select
+					className="mt-4"
+					selectedId={data ? data.categoryId : 0}
+					items={categories.categories[selectedParentCategory - 1].subCategories.map(
+						(cat) => {
+							return {
+								displayName: cat.displayName,
+								id: cat.id,
+							}
+						}
+					)}
+				/>
+			)}
 
 			<TextInput className="mt-4 h-25" value={data ? data.summary : ""} />
 

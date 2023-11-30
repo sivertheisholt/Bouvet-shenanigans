@@ -24,6 +24,8 @@ const SpeechRecognitionWrapperComponent = ({
 		stopRecording,
 	} = useWhisper({
 		apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
+		streaming: true,
+		timeSlice: 1_000, // 1 second
 		whisperConfig: {
 			language: "no",
 		},
