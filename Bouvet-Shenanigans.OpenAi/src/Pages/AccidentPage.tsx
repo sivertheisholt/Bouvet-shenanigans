@@ -52,9 +52,17 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 			model: "gpt-4",
 			messages: [{ role: "user", content: finalQuestion }],
 		})
-		const res = await getChat.mutateAsync(jsonString)
-		const resObj = JSON.parse(res.choices[0].message.content) as ChatGptResponseSchemaDto
-		setData(resObj)
+
+		try {
+			const res = await getChat.mutateAsync(jsonString)
+			const resObj = JSON.parse(
+				res.choices[0].message.content
+			) as ChatGptResponseSchemaDto
+			setData(resObj)
+		} catch (err) {
+			console.log("Could not parse respond")
+		}
+
 		setIsLoadingData(false)
 	}
 
