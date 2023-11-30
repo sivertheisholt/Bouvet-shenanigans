@@ -1,7 +1,7 @@
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition"
+import { useSpeechRecognition } from "react-speech-recognition"
 import { Button } from "./Button"
 import { useEffect } from "react"
-import { url } from "inspector"
+import useWhisper from "@chengsokdara/use-whisper"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
@@ -13,30 +13,49 @@ const SpeechRecognitionWrapperComponent = ({
 	setTranscript,
 	isDoneCb,
 }: SpeechRecognitionWrapperProps) => {
-	const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } =
-		useSpeechRecognition()
+	const { browserSupportsSpeechRecognition } = useSpeechRecognition()
+
+	const {
+		recording,
+		speaking,
+		transcript,
+		pauseRecording,
+		startRecording,
+		stopRecording,
+	} = useWhisper({
+		apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
+		whisperConfig: {
+			language: "no",
+		},
+	})
 
 	useEffect(() => {
-		setTranscript(transcript)
-	}, [transcript])
+		if (transcript.text != undefined) setTranscript(transcript.text)
+	}, [transcript.text])
 
 	if (!browserSupportsSpeechRecognition) {
 		return <span>Browser doesn't support speech recognition.</span>
 	}
 
-	const stopRecording = () => {
-		SpeechRecognition.stopListening()
+	const stopRecordingHandler = async () => {
+		await stopRecording()
 		isDoneCb()
 	}
 
 	const startListening = (event: any) => {
 		event.preventDefault()
-		SpeechRecognition.startListening({ continuous: true, language: "nb-NO" })
+		startRecording()
 	}
-	const stopListening = () => SpeechRecognition.stopListening()
+
+	const stopListening = () => pauseRecording()
 
 	const handleContextMenu = (event: any) => {
 		event.preventDefault()
+	}
+
+	const resetTranscript = () => {
+		transcript.blob = undefined
+		transcript.text = undefined
 	}
 
 	return (
@@ -61,7 +80,7 @@ const SpeechRecognitionWrapperComponent = ({
 					}}
 					width="30%"
 					src={
-						listening ? "./images/microphone-open.png" : "./images/microphone-closed.png"
+						recording ? "./images/microphone-open.png" : "./images/microphone-closed.png"
 					}
 				/>
 			</div>
@@ -72,10 +91,10 @@ const SpeechRecognitionWrapperComponent = ({
 			>
 				Resultat
 			</h1>
-			<p>{transcript}</p>
+			<p>{transcript.text}</p>
 
 			<div style={{ textAlign: "center" }} className="pt-4">
-				<Button className="fs-5 me-2" onClick={stopRecording} title="Ferdig" />
+				<Button className="fs-5 me-2" onClick={stopRecordingHandler} title="Ferdig" />
 				<Button className="fs-5" onClick={resetTranscript} title="Start på nytt" />
 			</div>
 		</div>
