@@ -12,5 +12,9 @@ type ChatGptResponseChoiceDto = {
 	message: {
 		role: string
 		content: string
+		function_call: {
+			name: string
+			arguments: string
+		}
 	}
 }

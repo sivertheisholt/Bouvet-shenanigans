@@ -26,16 +26,13 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 	}
 
 	const question = `
-		KUN RESPONDER MED JSON IKKE NOE ANNET!
-		Din jobb er å velge riktig kategorier ved å bruke brukerinput. Du skal velge både hovedkategori og subKategori som passer. Du skal også oppsummere input fra brukere. Dersom du ikke finner passende kategori, så setter du id til 0. Dette er følgende eksisterende informasjon:
+		Din jobb er å velge riktig kategorier ved å bruke brukerinput. Du skal velge både hovedkategori og subKategori som passer. 
+		Du skal også gjøre en oppsummering av input fra brukere. 
+		Dersom du ikke finner passende kategori, så setter du id til 0. 
+		Dette er følgende eksisterende informasjon:
 		${JSON.stringify(categories)}
 
-		Returner med følgende JSON format:
-		{
-			"categoryId":  <value here>,
-			"subCategoryId": <value here>,
-			"summary": <value here>
-		}
+		Kall funksjonen "fillForm".
 
 		Brukerinput: 
 	`
@@ -45,22 +42,42 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 		let finalQuestion =
 			question +
 			(transcript == ""
-				? "Systemet har brent ned og har problem med oppstart på grunn av varme"
+				? "Systemet har brent ned og har problem med oppstart på grunn av varme. Kan være på grunn av vifte har stoppet."
 				: transcript)
 
 		let jsonString: string = JSON.stringify({
 			model: "gpt-4",
 			messages: [{ role: "user", content: finalQuestion }],
+			functions: [
+				{
+					name: "fillForm",
+					parameters: {
+						type: "object",
+						properties: {
+							categoryId: {
+								type: "integer",
+							},
+							subCategoryId: {
+								type: "integer",
+							},
+							summary: {
+								type: "string",
+							},
+						},
+						required: ["categoryId", "subCategoryId", "summary"],
+					},
+				},
+			],
+			function_call: { name: "fillForm" },
 		})
 
 		try {
 			const res = await getChat.mutateAsync(jsonString)
-			const resObj = JSON.parse(
-				res.choices[0].message.content
-			) as ChatGptResponseSchemaDto
-			setData(resObj)
+			const functionCall = res.choices[0].message.function_call
+			const json = JSON.parse(functionCall.arguments) as ChatGptResponseSchemaDto
+			setData(json)
 		} catch (err) {
-			console.log("Could not parse respond")
+			console.log("Could not parse respond: " + err)
 		}
 
 		setIsLoadingData(false)

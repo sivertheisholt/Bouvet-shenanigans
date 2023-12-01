@@ -7,7 +7,7 @@ export const useChatGpt = () => {
 	return useMutation(
 		async (messages: string) =>
 			await axiosClient
-				.post("/chat/completions", messages)
+				.post("", messages)
 				.then((resp: any) => resp.data as ChatGptResponseDto)
 	)
 }
