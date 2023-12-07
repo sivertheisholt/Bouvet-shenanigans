@@ -27,6 +27,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          context: ./Bouvet-Shenanigans.GptRetrieval
           push: true
           build-args: |
             version=latest
