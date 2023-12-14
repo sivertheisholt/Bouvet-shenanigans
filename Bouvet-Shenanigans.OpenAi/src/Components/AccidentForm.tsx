@@ -24,6 +24,17 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 		data.subCategoryId = parseInt(element.target.value)
 	}
 
+	const startRecording = () => {
+		navigator.mediaDevices
+			.getUserMedia({ video: false, audio: true })
+			.then(() => {
+				setIsRecording(true)
+			})
+			.catch((err) => {
+				console.error(`you got an error: ${err}`)
+			})
+	}
+
 	return (
 		<div className="px-5 py-3 h-100">
 			<h1 className="fs-1">Hva har skjedd?</h1>
@@ -32,11 +43,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 				oppsummert beskrivelse
 			</div>
 			<div>
-				<Button
-					className="fs-5"
-					onClick={() => setIsRecording(true)}
-					title="Start tale til tekst"
-				/>
+				<Button className="fs-5" onClick={startRecording} title="Start tale til tekst" />
 			</div>
 
 			<Select
