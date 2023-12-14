@@ -5,6 +5,7 @@ import { SpeechRecognitionWrapper } from "../Components/SpeechRecognitionWrapper
 import { AccidentForm } from "../Components/AccidentForm"
 import { BeatLoader } from "react-spinners"
 import { categories } from "../Static/categories"
+import { Header } from "../Components/Header"
 
 export interface AccidentPageProps {}
 
@@ -89,6 +90,7 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 
 	return (
 		<div className="wrapper">
+			<Header />
 			{isRecording ? (
 				<SpeechRecognitionWrapper
 					isRecording={isRecording}

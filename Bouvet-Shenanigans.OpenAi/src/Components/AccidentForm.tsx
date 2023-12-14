@@ -36,7 +36,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 	}
 
 	return (
-		<div className="px-5 py-3 h-100">
+		<div style={{ height: "calc(100% - 50px)" }} className="px-5 py-3">
 			<h1 className="fs-1">Hva har skjedd?</h1>
 			<div className="mt-4 alert alert-info fs-6" role="alert">
 				Bruk tale til tekst funksjonen så vil systemet foreslå riktig kategori og lage en
