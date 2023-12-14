@@ -45,30 +45,14 @@ const SpeechRecognitionWrapperComponent = ({
 		isDoneCb()
 	}
 
-	const startListening = (event: any) => {
-		event.preventDefault()
-		startRecording()
-	}
-
-	const stopListening = () => pauseRecording()
-
-	const handleContextMenu = (event: any) => {
-		event.preventDefault()
-	}
-
 	return (
-		<div>
-			<h1 style={{ textAlign: "center" }} className=" pt-2 fs-2">
-				Hold for å aktivere
+		<div className="d-flex flex-column align-items-center p-2">
+			<h5>{recording ? "Innspilling..." : "Venter..."}</h5>
+			<h1 className="pt-2 fs-2">
+				{recording ? "Trykk for å pause" : "Trykk for å starte innspilling"}
 			</h1>
-			<div
-				onMouseDown={startListening}
-				onMouseUp={stopListening}
-				onTouchStart={startListening}
-				onTouchEnd={stopListening}
-			>
+			<div onClick={recording ? pauseRecording : startRecording}>
 				<img
-					onContextMenu={handleContextMenu}
 					className="pt-4"
 					style={{
 						display: "block",
@@ -76,31 +60,29 @@ const SpeechRecognitionWrapperComponent = ({
 						marginRight: "auto",
 						zIndex: -1,
 					}}
-					width="30%"
+					width="40%"
 					src={
 						recording ? "./images/microphone-open.png" : "./images/microphone-closed.png"
 					}
 				/>
 			</div>
 
-			<h1
-				style={{ textAlign: "center" }}
-				className=" mt-4 fs-2 text-decoration-underline"
-			>
-				Status
-			</h1>
-			{transcribing && (
-				<div style={{ textAlign: "center" }} className="pt-4">
+			<div style={{ textAlign: "center" }} className="fs-5 w-75 border border-dark mt-5">
+				{transcribing ? (
 					<BeatLoader />
-				</div>
-			)}
-
-			<p>{transcript.text}</p>
-
-			<div style={{ textAlign: "center" }} className="pt-4">
-				<Button className="fs-5 me-2" onClick={stopRecording} title="Konverter" />
-				<Button className="fs-5 me-2" onClick={stopRecordingHandler} title="Ferdig" />
+				) : transcript.text != undefined ? (
+					transcript.text
+				) : (
+					"Tale til tekst..."
+				)}
 			</div>
+
+			<Button className="fs-5 me-2 w-75 mt-5" onClick={stopRecording} title="Konverter" />
+			<Button
+				className="fs-5 me-2 w-75 mt-5"
+				onClick={stopRecordingHandler}
+				title="Ferdig"
+			/>
 		</div>
 	)
 }
