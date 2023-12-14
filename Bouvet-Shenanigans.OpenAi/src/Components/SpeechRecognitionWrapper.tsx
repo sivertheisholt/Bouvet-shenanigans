@@ -2,6 +2,7 @@ import { useSpeechRecognition } from "react-speech-recognition"
 import { Button } from "./Button"
 import { useEffect } from "react"
 import useWhisper from "@chengsokdara/use-whisper"
+import { BeatLoader } from "react-spinners"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
@@ -19,13 +20,14 @@ const SpeechRecognitionWrapperComponent = ({
 		recording,
 		speaking,
 		transcript,
+		transcribing,
 		pauseRecording,
 		startRecording,
 		stopRecording,
 	} = useWhisper({
 		apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
-		streaming: true,
 		timeSlice: 1_000, // 1 second
+		removeSilence: true,
 		whisperConfig: {
 			language: "no",
 		},
@@ -53,11 +55,6 @@ const SpeechRecognitionWrapperComponent = ({
 
 	const handleContextMenu = (event: any) => {
 		event.preventDefault()
-	}
-
-	const resetTranscript = () => {
-		transcript.blob = undefined
-		transcript.text = undefined
 	}
 
 	return (
@@ -91,13 +88,19 @@ const SpeechRecognitionWrapperComponent = ({
 				style={{ textAlign: "center" }}
 				className=" mt-4 fs-2 text-decoration-underline"
 			>
-				Resultat
+				Status
 			</h1>
+			{transcribing && (
+				<div style={{ textAlign: "center" }} className="pt-4">
+					<BeatLoader />
+				</div>
+			)}
+
 			<p>{transcript.text}</p>
 
 			<div style={{ textAlign: "center" }} className="pt-4">
+				<Button className="fs-5 me-2" onClick={stopRecording} title="Konverter" />
 				<Button className="fs-5 me-2" onClick={stopRecordingHandler} title="Ferdig" />
-				<Button className="fs-5" onClick={resetTranscript} title="Start på nytt" />
 			</div>
 		</div>
 	)
