@@ -1,8 +1,8 @@
 import "./App.css"
-import { AccidentPage } from "./Pages/AccidentPage"
+import { Routing } from "./Routing"
 
 function App() {
-	return <AccidentPage />
+	return <Routing />
 }
 
 export default App
