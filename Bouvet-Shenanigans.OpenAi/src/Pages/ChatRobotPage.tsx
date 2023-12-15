@@ -6,7 +6,6 @@ import { ChatMessage } from "../Types/ChatRobot/ChatMessage"
 import { useQuery, useUpsert } from "../Hooks/ChatGptRetrieval"
 import { RetrievalQueryDto } from "../Types/Hooks/RetrievalQueryDto"
 import { RetrievalUpsertDto } from "../Types/Hooks/RetrievalUpsertDto"
-import { getCurrentDateTime } from "../Helpers/DateHelper"
 import { useChatGpt } from "../Hooks/ChatGpt"
 
 export interface ChatRobotPageProps {}
@@ -59,6 +58,8 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 		console.log(queryResult)
 
 		const context = `
+			You are gona reply like a human would do and not like an AI. Your personality should be nice, curious and excited. You shall never reply with anything that sounds robotic in any way. 
+			The Context provides information aobut the user you are talking to, if they have a history.
 			Context:
 			${JSON.stringify(queryResult.results)}
 
