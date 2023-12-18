@@ -76,6 +76,8 @@ class RedisDataStore(DataStore):
         self._default_metadata = {
             field: (0 if field == "created_at" else "_null_") for field in redisearch_schema["metadata"]
         }
+        t = Thread(target = self.countdown, args =(client, )) 
+        t.start() 
 
     ### Redis Helper Methods ###
 
@@ -90,6 +92,7 @@ class RedisDataStore(DataStore):
             client = redis.Redis(
                 host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
             )
+
         except Exception as e:
             logger.error(f"Error setting up Redis: {e}")
             raise e
@@ -131,9 +134,7 @@ class RedisDataStore(DataStore):
             await client.ft(REDIS_INDEX_NAME).create_index(
                 fields=fields, definition=definition
             )
-            
-        t = Thread(target = 10) 
-        t.start() 
+        
         return cls(client, redisearch_schema)
 
     @staticmethod
@@ -168,10 +169,10 @@ class RedisDataStore(DataStore):
 
         return REDIS_DEFAULT_ESCAPED_CHARS.sub(escape_symbol, value)
     
-    def ping(self): 
-        while True:
-            self.client.ping()
-            time.sleep(5) 
+    def countdown(client): 
+        while True: 
+            print('Pinging client...') 
+            time.sleep(5)
 
     def _get_redis_chunk(self, chunk: DocumentChunk) -> dict:
         """
