@@ -76,8 +76,6 @@ class RedisDataStore(DataStore):
         self._default_metadata = {
             field: (0 if field == "created_at" else "_null_") for field in redisearch_schema["metadata"]
         }
-        t = Thread(target = self.countdown, args =(client)) 
-        t.start() 
 
     ### Redis Helper Methods ###
 
@@ -89,8 +87,16 @@ class RedisDataStore(DataStore):
         try:
             # Connect to the Redis Client
             logger.info("Connecting to Redis")
+            socket_keepalive_options = {
+                # Set TCP_KEEPIDLE to 60 seconds (may need to adjust for your platform)
+                redis.TCP_KEEPIDLE: 15,
+                # Set TCP_KEEPINTVL to 30 seconds
+                redis.TCP_KEEPINTVL: 10,
+                # Set TCP_KEEPCNT to 4
+                redis.TCP_KEEPCNT: 4
+            }
             client = redis.Redis(
-                host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
+                host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, socket_keepalive=True, socket_keepalive_options=socket_keepalive_options
             )
 
         except Exception as e:
