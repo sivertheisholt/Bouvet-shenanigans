@@ -90,11 +90,11 @@ class RedisDataStore(DataStore):
             logger.info("Connecting to Redis")
             socket_keepalive_options = {
                 # Set TCP_KEEPIDLE to 60 seconds (may need to adjust for your platform)
-                socket.TCP_KEEPIDLE: 15,
+                socket.TCP_KEEPIDLE: 5,
                 # Set TCP_KEEPINTVL to 30 seconds
-                socket.TCP_KEEPINTVL: 10,
+                socket.TCP_KEEPINTVL: 2,
                 # Set TCP_KEEPCNT to 4
-                socket.TCP_KEEPCNT: 4
+                socket.TCP_KEEPCNT: 5
             }
             client = redis.Redis(
                 host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, socket_keepalive=True, socket_keepalive_options=socket_keepalive_options
