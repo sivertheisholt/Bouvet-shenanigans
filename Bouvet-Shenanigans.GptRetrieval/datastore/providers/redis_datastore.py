@@ -2,6 +2,8 @@ import asyncio
 import os
 import re
 import json
+from threading import Thread
+import time
 import redis.asyncio as redis
 import numpy as np
 
@@ -129,6 +131,9 @@ class RedisDataStore(DataStore):
             await client.ft(REDIS_INDEX_NAME).create_index(
                 fields=fields, definition=definition
             )
+            
+        t = Thread(target = 10) 
+        t.start() 
         return cls(client, redisearch_schema)
 
     @staticmethod
@@ -162,6 +167,11 @@ class RedisDataStore(DataStore):
             return f"\\{value}"
 
         return REDIS_DEFAULT_ESCAPED_CHARS.sub(escape_symbol, value)
+    
+    def ping(self): 
+        while True:
+            self.client.ping()
+            time.sleep(5) 
 
     def _get_redis_chunk(self, chunk: DocumentChunk) -> dict:
         """
