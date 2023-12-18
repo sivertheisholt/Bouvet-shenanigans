@@ -76,7 +76,7 @@ class RedisDataStore(DataStore):
         self._default_metadata = {
             field: (0 if field == "created_at" else "_null_") for field in redisearch_schema["metadata"]
         }
-        t = Thread(target = self.countdown, args =(client, )) 
+        t = Thread(target = self.countdown, args =(client)) 
         t.start() 
 
     ### Redis Helper Methods ###
@@ -169,9 +169,10 @@ class RedisDataStore(DataStore):
 
         return REDIS_DEFAULT_ESCAPED_CHARS.sub(escape_symbol, value)
     
-    def countdown(client): 
+    def countdown(client: redis.Redis): 
         while True: 
             print('Pinging client...') 
+            client.ping()
             time.sleep(5)
 
     def _get_redis_chunk(self, chunk: DocumentChunk) -> dict:
