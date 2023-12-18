@@ -2,6 +2,7 @@ import asyncio
 import os
 import re
 import json
+import socket
 from threading import Thread
 import time
 import redis.asyncio as redis
@@ -89,11 +90,11 @@ class RedisDataStore(DataStore):
             logger.info("Connecting to Redis")
             socket_keepalive_options = {
                 # Set TCP_KEEPIDLE to 60 seconds (may need to adjust for your platform)
-                redis.TCP_KEEPIDLE: 15,
+                socket.TCP_KEEPIDLE: 15,
                 # Set TCP_KEEPINTVL to 30 seconds
-                redis.TCP_KEEPINTVL: 10,
+                socket.TCP_KEEPINTVL: 10,
                 # Set TCP_KEEPCNT to 4
-                redis.TCP_KEEPCNT: 4
+                socket.TCP_KEEPCNT: 4
             }
             client = redis.Redis(
                 host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, socket_keepalive=True, socket_keepalive_options=socket_keepalive_options
