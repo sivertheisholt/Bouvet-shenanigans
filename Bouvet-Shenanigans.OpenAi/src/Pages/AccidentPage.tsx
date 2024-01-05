@@ -3,7 +3,6 @@ import { ChatGptResponseSchemaDto } from "../Types/Hooks/ChatGptResponseSchemaDt
 import { useChatGpt } from "../Hooks/ChatGpt"
 import { SpeechRecognitionWrapper } from "../Components/SpeechRecognitionWrapper"
 import { AccidentForm } from "../Components/AccidentForm"
-import { BeatLoader } from "react-spinners"
 import { categories } from "../Static/categories"
 import { Header } from "../Components/Header"
 
@@ -13,7 +12,6 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 	const getChat = useChatGpt()
 
 	const [isRecording, setIsRecording] = useState(false)
-	const [transcript, setTranscript] = useState("")
 	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [data, setData] = useState<ChatGptResponseSchemaDto>({
 		categoryId: 0,
@@ -21,9 +19,9 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 		subCategoryId: 0,
 	})
 
-	const isDoneRecording = () => {
+	const isDoneRecording = (transcript: string) => {
 		setIsRecording(false)
-		sendChat()
+		sendChat(transcript)
 	}
 
 	const question = `
@@ -38,7 +36,7 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 		Brukerinput: 
 	`
 
-	const sendChat = async () => {
+	const sendChat = async (transcript: string) => {
 		setIsLoadingData(true)
 		let finalQuestion =
 			question +
@@ -97,7 +95,6 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 						<SpeechRecognitionWrapper
 							isRecording={isRecording}
 							isDoneCb={isDoneRecording}
-							setTranscript={setTranscript}
 						/>
 					) : (
 						<AccidentForm data={data} setIsRecording={setIsRecording} />

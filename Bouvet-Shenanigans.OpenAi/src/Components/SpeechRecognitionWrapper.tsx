@@ -5,12 +5,10 @@ import useWhisper from "@chengsokdara/use-whisper"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
-	setTranscript: (transcript: string) => unknown
-	isDoneCb: () => unknown
+	isDoneCb: (transcript: string) => unknown
 }
 
 const SpeechRecognitionWrapperComponent = ({
-	setTranscript,
 	isDoneCb,
 }: SpeechRecognitionWrapperProps) => {
 	const { browserSupportsSpeechRecognition } = useSpeechRecognition()
@@ -26,8 +24,7 @@ const SpeechRecognitionWrapperComponent = ({
 
 	useEffect(() => {
 		if (transcript.text != undefined) {
-			setTranscript(transcript.text)
-			isDoneCb()
+			isDoneCb(transcript.text)
 		}
 	}, [transcript.text])
 
