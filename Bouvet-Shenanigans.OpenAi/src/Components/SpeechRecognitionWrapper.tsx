@@ -38,36 +38,39 @@ const SpeechRecognitionWrapperComponent = ({
 	}
 
 	return (
-		<div className="h-100 d-flex flex-column align-items-center p-2">
-			{transcribing ? (
-				<h1 className="position-absolute top-50 start-50 translate-middle">
-					Prosesserer tekst...
-				</h1>
-			) : (
-				<>
-					{recording ? (
-						<>
-							<h1 className="pt-2 fs-2">Snakk nå...</h1>
+		<div
+			style={{ height: "calc(100% - 50px)" }}
+			className="d-flex flex-row align-items-center p-2"
+		>
+			<div className="flex-grow-1 d-flex flex-column align-items-center">
+				{transcribing ? (
+					<></>
+				) : (
+					<>
+						{recording ? (
+							<>
+								<h1 className="pt-2 fs-2">Snakk nå...</h1>
+								<Button
+									className="fs-5 me-2 w-75 mt-5"
+									onClick={stopRecordingHandler}
+									title="Stopp"
+								/>
+								<Button
+									className="fs-5 me-2 w-75 mt-5"
+									onClick={stopRecording}
+									title="Begynn på nytt"
+								/>
+							</>
+						) : (
 							<Button
 								className="fs-5 me-2 w-75 mt-5"
-								onClick={stopRecordingHandler}
-								title="Stopp"
+								onClick={startRecording}
+								title="Start"
 							/>
-							<Button
-								className="fs-5 me-2 w-75 mt-5"
-								onClick={stopRecording}
-								title="Begynn på nytt"
-							/>
-						</>
-					) : (
-						<Button
-							className="fs-5 me-2 w-75 mt-5"
-							onClick={startRecording}
-							title="Start"
-						/>
-					)}
-				</>
-			)}
+						)}
+					</>
+				)}
+			</div>
 		</div>
 	)
 }

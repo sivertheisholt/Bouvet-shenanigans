@@ -88,7 +88,7 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 		<div className="wrapper">
 			<Header />
 			{isLoadingData ? (
-				<h1 className="position-absolute top-50 start-50 translate-middle">
+				<h1 className="fs-5 position-absolute top-50 start-50 translate-middle">
 					Prosesserer tekst...
 				</h1>
 			) : (
