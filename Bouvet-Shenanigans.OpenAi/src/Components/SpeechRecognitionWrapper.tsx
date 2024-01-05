@@ -49,7 +49,7 @@ const SpeechRecognitionWrapperComponent = ({
 					<>
 						{recording ? (
 							<>
-								<h1 className="pt-2 fs-2">Snakk nå...</h1>
+								<h1 className="fs-2">Snakk nå...</h1>
 								<Button
 									className="fs-5 me-2 w-75 mt-5"
 									onClick={stopRecordingHandler}
@@ -62,11 +62,7 @@ const SpeechRecognitionWrapperComponent = ({
 								/>
 							</>
 						) : (
-							<Button
-								className="fs-5 me-2 w-75 mt-5"
-								onClick={startRecording}
-								title="Start"
-							/>
+							<Button className="fs-5 me-2 w-75" onClick={startRecording} title="Start" />
 						)}
 					</>
 				)}
