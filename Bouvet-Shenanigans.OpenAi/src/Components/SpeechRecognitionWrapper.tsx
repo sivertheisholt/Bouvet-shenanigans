@@ -25,7 +25,10 @@ const SpeechRecognitionWrapperComponent = ({
 		})
 
 	useEffect(() => {
-		if (transcript.text != undefined) setTranscript(transcript.text)
+		if (transcript.text != undefined) {
+			setTranscript(transcript.text)
+			isDoneCb()
+		}
 	}, [transcript.text])
 
 	if (!browserSupportsSpeechRecognition) {
@@ -33,8 +36,7 @@ const SpeechRecognitionWrapperComponent = ({
 	}
 
 	const stopRecordingHandler = async () => {
-		await stopRecording()
-		isDoneCb()
+		stopRecording()
 	}
 
 	return (
