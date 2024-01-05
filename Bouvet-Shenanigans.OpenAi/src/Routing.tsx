@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { NavigationPage } from "./Pages/NavigationPage"
 import { AccidentPage } from "./Pages/AccidentPage"
 import { ChatRobotPage } from "./Pages/ChatRobotPage"
+import { PowerTestPage } from "./Pages/PowerTestPage"
 
 export interface RoutingProps {}
 

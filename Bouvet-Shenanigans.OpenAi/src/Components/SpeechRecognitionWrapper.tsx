@@ -2,7 +2,6 @@ import { useSpeechRecognition } from "react-speech-recognition"
 import { Button } from "./Button"
 import { useEffect } from "react"
 import useWhisper from "@chengsokdara/use-whisper"
-import { BeatLoader } from "react-spinners"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
@@ -16,21 +15,14 @@ const SpeechRecognitionWrapperComponent = ({
 }: SpeechRecognitionWrapperProps) => {
 	const { browserSupportsSpeechRecognition } = useSpeechRecognition()
 
-	const {
-		recording,
-		speaking,
-		transcript,
-		transcribing,
-		pauseRecording,
-		startRecording,
-		stopRecording,
-	} = useWhisper({
-		apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
-		removeSilence: true,
-		whisperConfig: {
-			language: "no",
-		},
-	})
+	const { recording, transcript, transcribing, startRecording, stopRecording } =
+		useWhisper({
+			apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
+			removeSilence: true,
+			whisperConfig: {
+				language: "no",
+			},
+		})
 
 	useEffect(() => {
 		if (transcript.text != undefined) setTranscript(transcript.text)
@@ -46,43 +38,36 @@ const SpeechRecognitionWrapperComponent = ({
 	}
 
 	return (
-		<div className="d-flex flex-column align-items-center p-2">
-			<h5>{recording ? "Innspilling..." : "Venter..."}</h5>
-			<h1 className="pt-2 fs-2">
-				{recording ? "Trykk for å pause" : "Trykk for å starte innspilling"}
-			</h1>
-			<div onClick={recording ? pauseRecording : startRecording}>
-				<img
-					className="pt-4"
-					style={{
-						display: "block",
-						marginLeft: "auto",
-						marginRight: "auto",
-						zIndex: -1,
-					}}
-					width="40%"
-					src={
-						recording ? "./images/microphone-open.png" : "./images/microphone-closed.png"
-					}
-				/>
-			</div>
-
-			<div style={{ textAlign: "center" }} className="fs-5 w-75 border border-dark mt-5">
-				{transcribing ? (
-					<BeatLoader />
-				) : transcript.text != undefined ? (
-					transcript.text
-				) : (
-					"Tale til tekst..."
-				)}
-			</div>
-
-			<Button className="fs-5 me-2 w-75 mt-5" onClick={stopRecording} title="Konverter" />
-			<Button
-				className="fs-5 me-2 w-75 mt-5"
-				onClick={stopRecordingHandler}
-				title="Ferdig"
-			/>
+		<div className="h-100 d-flex flex-column align-items-center p-2">
+			{transcribing ? (
+				<h1 className="position-absolute top-50 start-50 translate-middle">
+					Prosesserer tekst...
+				</h1>
+			) : (
+				<>
+					{recording ? (
+						<>
+							<h1 className="pt-2 fs-2">Snakk nå...</h1>
+							<Button
+								className="fs-5 me-2 w-75 mt-5"
+								onClick={stopRecordingHandler}
+								title="Stopp"
+							/>
+							<Button
+								className="fs-5 me-2 w-75 mt-5"
+								onClick={stopRecording}
+								title="Begynn på nytt"
+							/>
+						</>
+					) : (
+						<Button
+							className="fs-5 me-2 w-75 mt-5"
+							onClick={startRecording}
+							title="Start"
+						/>
+					)}
+				</>
+			)}
 		</div>
 	)
 }

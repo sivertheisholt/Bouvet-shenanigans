@@ -11,6 +11,7 @@ import { useChatGpt } from "../Hooks/ChatGpt"
 export interface ChatRobotPageProps {}
 
 const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
+	const date = new Date()
 	const [username, setUsername] = useState("")
 	const [messages, setMessages] = useState<Array<ChatMessage>>([])
 	const useRetrievalQuery = useQuery()
@@ -22,9 +23,7 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 	}, [])
 
 	const sendPrompt = async (prompt: string) => {
-		const date = new Date()
-
-		addMessage({ author: username, message: prompt, created_at: Date.now().toString() })
+		addMessage({ author: username, message: prompt, created_at: date.toISOString() })
 
 		const upsertDto: RetrievalUpsertDto = {
 			documents: [
@@ -49,13 +48,12 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 						source: "chat",
 						source_id: "",
 					},
-					top_k: 5,
+					top_k: 10,
 				},
 			],
 		}
 
 		var queryResult = await useRetrievalQuery.mutateAsync(queryDto)
-		console.log(queryResult)
 
 		const context = `
 			You are gona reply like a human would do and not like an AI. Your personality should be nice, curious and excited. You shall never reply with anything that sounds robotic in any way. 
@@ -75,8 +73,11 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 
 		const res = await getChat.mutateAsync(jsonString)
 		const gptResponse = res.choices[0].message.content
-		addMessage({ author: "bot", message: gptResponse, created_at: Date.now().toString() })
-		console.log(messages)
+		addMessage({ author: "bot", message: gptResponse, created_at: date.toISOString() })
+	}
+
+	const startChat = async (value: string) => {
+		addMessage({ author: username, message: value, created_at: date.toISOString() })
 	}
 
 	return (
@@ -87,7 +88,7 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 					style={{ height: "calc(100% - 50px)" }}
 					className="d-flex flex-column justify-content-center"
 				>
-					<UsernameInput setUsername={setUsername} />
+					<UsernameInput setUsername={setUsername} startChat={startChat} />
 				</div>
 			) : (
 				<Chat username={username} messages={messages} sendPrompt={sendPrompt} />

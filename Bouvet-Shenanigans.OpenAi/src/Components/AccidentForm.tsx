@@ -35,6 +35,10 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 			})
 	}
 
+	const reset = () => {
+		window.location.reload()
+	}
+
 	return (
 		<div style={{ height: "calc(100% - 50px)" }} className="px-5 py-3">
 			<h1 className="fs-1">Hva har skjedd?</h1>
@@ -75,7 +79,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 			<TextInput className="mt-4 h-25" value={data ? data.summary : ""} />
 
 			<div className="pt-4">
-				<Button className="me-2 fs-5" title="Start på nytt" />
+				<Button onClick={reset} className="me-2 fs-5" title="Start på nytt" />
 				<Button className="fs-5" title="Lagre" />
 			</div>
 		</div>

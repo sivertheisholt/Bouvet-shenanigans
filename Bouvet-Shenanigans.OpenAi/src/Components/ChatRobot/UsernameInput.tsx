@@ -1,14 +1,60 @@
 import React, { useState } from "react"
+import { useQuery } from "../../Hooks/ChatGptRetrieval"
+import { RetrievalQueryDto } from "../../Types/Hooks/RetrievalQueryDto"
+import { useChatGpt } from "../../Hooks/ChatGpt"
 
 export interface UsernameInputProps {
 	setUsername: (username: string) => unknown
+	startChat: (value: string) => unknown
 }
 
-const UsernameInputComponent = ({ setUsername }: UsernameInputProps) => {
+const UsernameInputComponent = ({ setUsername, startChat }: UsernameInputProps) => {
+	const useRetrievalQuery = useQuery()
+	const getChat = useChatGpt()
 	const [value, setValue] = useState("")
+
 	const onInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(evt.target.value)
 	}
+
+	const startChatHandler = async () => {
+		const queryDto: RetrievalQueryDto = {
+			queries: [
+				{
+					query: "like personality hobby",
+					filter: {
+						author: value,
+						source: "chat",
+						source_id: "",
+					},
+					top_k: 10,
+				},
+			],
+		}
+
+		var queryResult = await useRetrievalQuery.mutateAsync(queryDto)
+		const context = `
+			You are gona reply like a human would do and not like an AI. Your personality should be nice, curious and excited. You shall never reply with anything that sounds robotic in any way. 
+			The Context provides information aobut the user you are talking to, if they have a history.
+			Context:
+			${JSON.stringify(queryResult.results)}
+
+			Prompt:
+
+		`
+		let finalPrompt = context + prompt
+
+		let jsonString: string = JSON.stringify({
+			model: "gpt-4",
+			messages: [{ role: "user", content: finalPrompt }],
+		})
+
+		const res = await getChat.mutateAsync(jsonString)
+		const gptResponse = res.choices[0].message.content
+		startChat(gptResponse)
+		setUsername(value)
+	}
+
 	return (
 		<div className="d-flex flex-column align-items-center">
 			<h1>Enter username:</h1>
@@ -22,7 +68,7 @@ const UsernameInputComponent = ({ setUsername }: UsernameInputProps) => {
 				value={value}
 			/>
 			<button
-				onClick={() => setUsername(value)}
+				onClick={startChatHandler}
 				type="button"
 				className="btn btn-primary mt-3 w-75"
 			>

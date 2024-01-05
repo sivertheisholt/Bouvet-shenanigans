@@ -36,7 +36,7 @@ const ChatComponent = ({ username, messages, sendPrompt }: ChatProps) => {
 								<div className="msg-bubble">
 									<div className="msg-info">
 										<div className="msg-info-name">Shenanigano</div>
-										<div className="msg-info-time">12:45</div>
+										<div className="msg-info-time">{message.created_at}</div>
 									</div>
 
 									<div className="msg-text">{message.message}</div>
@@ -59,7 +59,7 @@ const ChatComponent = ({ username, messages, sendPrompt }: ChatProps) => {
 								<div className="msg-bubble">
 									<div className="msg-info">
 										<div className="msg-info-name">{username}</div>
-										<div className="msg-info-time">12:46</div>
+										<div className="msg-info-time">{message.created_at}</div>
 									</div>
 
 									<div className="msg-text">{message.message}</div>

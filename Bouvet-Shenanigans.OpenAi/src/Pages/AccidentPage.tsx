@@ -84,21 +84,25 @@ const AccidentPageComponent = (props: AccidentPageProps) => {
 		setIsLoadingData(false)
 	}
 
-	if (isLoadingData) {
-		return <BeatLoader className="position-absolute top-50 start-50 translate-middle" />
-	}
-
 	return (
 		<div className="wrapper">
 			<Header />
-			{isRecording ? (
-				<SpeechRecognitionWrapper
-					isRecording={isRecording}
-					isDoneCb={isDoneRecording}
-					setTranscript={setTranscript}
-				/>
+			{isLoadingData ? (
+				<h1 className="position-absolute top-50 start-50 translate-middle">
+					Prosesserer tekst...
+				</h1>
 			) : (
-				<AccidentForm data={data} setIsRecording={setIsRecording} />
+				<>
+					{isRecording ? (
+						<SpeechRecognitionWrapper
+							isRecording={isRecording}
+							isDoneCb={isDoneRecording}
+							setTranscript={setTranscript}
+						/>
+					) : (
+						<AccidentForm data={data} setIsRecording={setIsRecording} />
+					)}
+				</>
 			)}
 		</div>
 	)
