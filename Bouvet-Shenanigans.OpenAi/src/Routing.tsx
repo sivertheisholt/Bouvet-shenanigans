@@ -11,7 +11,7 @@ const RoutingComponent = (props: RoutingProps) => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<NavigationPage />} />
-				<Route path="/formFiller" element={<AccidentPage />} />
+				<Route path="/formfiller" element={<AccidentPage />} />
 				<Route path="/chatrobot" element={<ChatRobotPage />} />
 			</Routes>
 		</BrowserRouter>

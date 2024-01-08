@@ -1,7 +1,6 @@
 import { useSpeechRecognition } from "react-speech-recognition"
 import { Button } from "./Button"
-import { useEffect } from "react"
-import useWhisper from "@chengsokdara/use-whisper"
+import useWhisper from "@sivertheisholt/use-whisper"
 
 export interface SpeechRecognitionWrapperProps {
 	isRecording: boolean
@@ -13,27 +12,36 @@ const SpeechRecognitionWrapperComponent = ({
 }: SpeechRecognitionWrapperProps) => {
 	const { browserSupportsSpeechRecognition } = useSpeechRecognition()
 
-	const { recording, transcript, transcribing, startRecording, stopRecording } =
-		useWhisper({
-			apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
-			removeSilence: true,
-			whisperConfig: {
-				language: "no",
-			},
-		})
-
-	useEffect(() => {
-		if (transcript.text != undefined) {
-			isDoneCb(transcript.text)
-		}
-	}, [transcript.text])
+	const {
+		recording,
+		transcript,
+		transcribing,
+		startRecording,
+		stopRecording,
+		resetTranscript,
+		onTranscribing,
+	} = useWhisper({
+		apiKey: process.env.REACT_APP_CHATGPT_API_TOKEN,
+		removeSilence: true,
+		autoTranscribe: false,
+		whisperConfig: {
+			language: "no",
+		},
+	})
 
 	if (!browserSupportsSpeechRecognition) {
 		return <span>Browser doesn't support speech recognition.</span>
 	}
 
 	const stopRecordingHandler = async () => {
-		stopRecording()
+		await stopRecording()
+		await onTranscribing()
+		isDoneCb(transcript.text!)
+	}
+
+	const restart = async () => {
+		await stopRecording()
+		resetTranscript()
 	}
 
 	return (
@@ -56,7 +64,7 @@ const SpeechRecognitionWrapperComponent = ({
 								/>
 								<Button
 									className="fs-5 me-2 w-75 mt-5"
-									onClick={stopRecording}
+									onClick={restart}
 									title="Begynn på nytt"
 								/>
 							</>
