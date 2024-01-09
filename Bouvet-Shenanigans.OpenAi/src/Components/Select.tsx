@@ -10,6 +10,7 @@ export interface SelectProps {
 	selectedId: number
 	onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => unknown
 	className?: string
+	placeholder?: string
 }
 
 const SelectComponent = ({
@@ -17,6 +18,7 @@ const SelectComponent = ({
 	selectedId,
 	onChange = () => {},
 	className = "",
+	placeholder = "Velg kategori",
 }: SelectProps) => {
 	className += " form-select"
 	return (
@@ -27,7 +29,7 @@ const SelectComponent = ({
 			onChange={onChange}
 		>
 			<option disabled value={0}>
-				Velg kategori
+				{placeholder}
 			</option>
 			{items.map((item) => (
 				<option key={item.id} value={item.id}>

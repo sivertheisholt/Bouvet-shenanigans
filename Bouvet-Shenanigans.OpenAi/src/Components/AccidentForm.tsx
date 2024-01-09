@@ -50,9 +50,11 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 				<Button className="fs-5" onClick={startRecording} title="Start tale til tekst" />
 			</div>
 
+			<label className="mt-4 mb-2">
+				<strong>Kategori:</strong>
+			</label>
 			<Select
 				onChange={onChangeParentCategory}
-				className="mt-4"
 				selectedId={data ? data.categoryId : 0}
 				items={categories.categories.map((cat) => {
 					return {
@@ -64,6 +66,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 
 			{data.categoryId != 0 && (
 				<Select
+					placeholder="Velg underkategori"
 					onChange={onChangeSubCategory}
 					className="mt-4"
 					selectedId={data ? data.subCategoryId : 0}
@@ -74,6 +77,24 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 						}
 					})}
 				/>
+			)}
+
+			{data.categoryId != 0 && (
+				<>
+					<label className="mt-4 mb-2">
+						<strong>Alvorlighetsgrad:</strong>
+					</label>
+					<Select
+						placeholder="Velg grad"
+						onChange={() => {}}
+						selectedId={1}
+						items={[
+							{ displayName: "Høy", id: 0 },
+							{ displayName: "Moderat", id: 1 },
+							{ displayName: "Lav", id: 2 },
+						]}
+					/>
+				</>
 			)}
 
 			<TextInput className="mt-4 h-25" value={data ? data.summary : ""} />
