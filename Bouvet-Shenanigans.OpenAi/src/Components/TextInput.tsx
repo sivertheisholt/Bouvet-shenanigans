@@ -14,6 +14,7 @@ const TextInputComponent = ({
 	className += " form-control"
 	return (
 		<textarea
+			style={{ height: "120px" }}
 			value={value}
 			className={className}
 			onChange={onChange}

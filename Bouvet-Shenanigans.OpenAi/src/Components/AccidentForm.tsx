@@ -40,9 +40,9 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 	}
 
 	return (
-		<div style={{ height: "calc(100% - 50px)" }} className="px-5 py-3">
-			<h1 className="fs-1">Hva har skjedd?</h1>
-			<div className="mt-4 alert alert-info fs-6" role="alert">
+		<div className="px-5 py-3 d-flex flex-column flex-grow-1">
+			<h1 className="fs-2">Hva har skjedd?</h1>
+			<div className="mt-2 alert alert-info fs-6" role="alert">
 				Bruk tale til tekst funksjonen så vil systemet foreslå riktig kategori og lage en
 				oppsummert beskrivelse
 			</div>
@@ -50,7 +50,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 				<Button className="fs-5" onClick={startRecording} title="Start tale til tekst" />
 			</div>
 
-			<label className="mt-4 mb-2">
+			<label className="mt-3 mb-2">
 				<strong>Kategori:</strong>
 			</label>
 			<Select
@@ -81,7 +81,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 
 			{data.categoryId != 0 && (
 				<>
-					<label className="mt-4 mb-2">
+					<label className="mt-3 mb-2">
 						<strong>Alvorlighetsgrad:</strong>
 					</label>
 					<Select
@@ -97,7 +97,7 @@ const AccidentFormComponent = ({ data, setIsRecording }: AccidentFormProps) => {
 				</>
 			)}
 
-			<TextInput className="mt-4 h-25" value={data ? data.summary : ""} />
+			<TextInput className="mt-4" value={data ? data.summary : ""} />
 
 			<div className="pt-4">
 				<Button onClick={reset} className="me-2 fs-5" title="Start på nytt" />

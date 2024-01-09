@@ -49,7 +49,7 @@ const SpeechRecognitionWrapperComponent = ({
 
 	return (
 		<div
-			style={{ height: "calc(100% - 50px)" }}
+			style={{ height: "calc(100vh - 50px)" }}
 			className="d-flex flex-row align-items-center p-2"
 		>
 			<div className="flex-grow-1 d-flex flex-column align-items-center">
