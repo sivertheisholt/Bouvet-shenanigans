@@ -77,7 +77,7 @@ const ChatRobotPageComponent = (props: ChatRobotPageProps) => {
 	}
 
 	const startChat = async (value: string) => {
-		addMessage({ author: username, message: value, created_at: date.toISOString() })
+		addMessage({ author: "bot", message: value, created_at: date.toISOString() })
 	}
 
 	return (

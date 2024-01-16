@@ -9,7 +9,6 @@ export interface UsernameInputProps {
 }
 
 const UsernameInputComponent = ({ setUsername, startChat }: UsernameInputProps) => {
-	const useRetrievalQuery = useQuery()
 	const getChat = useChatGpt()
 	const [value, setValue] = useState("")
 
@@ -18,31 +17,14 @@ const UsernameInputComponent = ({ setUsername, startChat }: UsernameInputProps) 
 	}
 
 	const startChatHandler = async () => {
-		const queryDto: RetrievalQueryDto = {
-			queries: [
-				{
-					query: "like personality hobby",
-					filter: {
-						author: value,
-						source: "chat",
-						source_id: "",
-					},
-					top_k: 10,
-				},
-			],
-		}
-
-		var queryResult = await useRetrievalQuery.mutateAsync(queryDto)
 		const context = `
 			You are gona reply like a human would do and not like an AI. Your personality should be nice, curious and excited. You shall never reply with anything that sounds robotic in any way. 
 			The Context provides information aobut the user you are talking to, if they have a history.
-			Context:
-			${JSON.stringify(queryResult.results)}
 
 			Prompt:
-
+      Hi there!
 		`
-		let finalPrompt = context + prompt
+		let finalPrompt = context
 
 		let jsonString: string = JSON.stringify({
 			model: "gpt-4",

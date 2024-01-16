@@ -78,8 +78,20 @@ const ChatComponent = ({ username, messages, sendPrompt }: ChatProps) => {
 					placeholder="Enter your message..."
 					value={value}
 					onChange={onInputChange}
+					onKeyDown={(event: React.KeyboardEvent) => {
+						if (event.key == "Enter") {
+							sendPrompt(value)
+							setValue("")
+						}
+					}}
 				/>
-				<button onClick={() => sendPrompt(value)} className="msger-send-btn">
+				<button
+					onClick={() => {
+						sendPrompt(value)
+						setValue("")
+					}}
+					className="msger-send-btn"
+				>
 					Send
 				</button>
 			</div>
