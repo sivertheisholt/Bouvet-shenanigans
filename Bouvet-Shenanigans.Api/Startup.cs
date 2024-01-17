@@ -89,7 +89,7 @@ namespace Bouvet_Shenanigans.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055", "http://localhost:5173", "https://pidetection.azurewebsites.net", "http://localhost:3333")
+            app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055", "http://localhost:5173", "https://pidetection.azurewebsites.net", "http://localhost:3333", "https://gentle-cliff-0a427ce03.4.azurestaticapps.net")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
