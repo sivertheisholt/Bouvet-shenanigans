@@ -8,8 +8,9 @@ on:
     branches:
       - "main"
     paths:
-      - "./Bouvet-Shenanigans.Api/*"
-      - "./Bouvet-Shenanigans.Web/*"
+      - "./Bouvet-Shenanigans.Api/**"
+      - "./Bouvet-Shenanigans.Web/**"
+      - ".github/workflows/main.yml"
 
 env:
   AZURE_WEBAPP_NAME: bouvet-shenanigans # set this to your application's name
