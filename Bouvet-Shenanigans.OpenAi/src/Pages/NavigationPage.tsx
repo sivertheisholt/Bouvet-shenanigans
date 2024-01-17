@@ -30,6 +30,15 @@ const NavigationPageComponent = (props: NavigationPageProps) => {
 						Skjema fyller
 					</Link>
 				</div>
+				<div className="w-75 border border-3 border-primary mt-5 text-center">
+					<Link
+						style={{ display: "block", textDecoration: "none", color: "black" }}
+						className="fs-1"
+						to="/powerb"
+					>
+						PowerB
+					</Link>
+				</div>
 			</div>
 		</div>
 	)

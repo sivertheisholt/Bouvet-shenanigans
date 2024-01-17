@@ -8,6 +8,8 @@ try
 
     var app = builder.Build();
 
+    Startup.FixMicrosoftIdentityOptionsMonitorRaceCondition(app.Services);
+
     await Startup.ConfigureDatabase(app);
 
     await Startup.ConfigureMiddleware(app);

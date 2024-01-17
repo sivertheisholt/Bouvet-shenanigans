@@ -53,33 +53,3 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp"
-
-      # Get version from API csproj
-      - name: Retrieve Version from .csproj
-        id: version
-        run: |
-          version=$(grep -oPm1 "(?<=<Version>)[^<]+" "./Bouvet-Shenanigans.Api/Bouvet-Shenanigans.Api.csproj")
-          echo "Version from .csproj: $version"
-          echo "project_version=$version" >> $GITHUB_OUTPUT
-
-      # Print version number
-      - name: Version number
-        run: |
-          version=${{ steps.version.outputs.project_version }}
-          echo "Using version ${{ steps.version.outputs.project_version }} in your build and deploy process"
-
-      # Create tag
-      - name: Create Git Tag
-        run: |
-          TAG_NAME=v${{ steps.version.outputs.project_version }}
-
-          git tag $TAG_NAME
-
-          git push origin $TAG_NAME
-
-      # Create release
-      - uses: ncipollo/release-action@v1
-        with:
-          body: ""
-          tag: v${{ steps.version.outputs.project_version }}
-          generateReleaseNotes: true

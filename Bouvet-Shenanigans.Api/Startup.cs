@@ -1,7 +1,14 @@
+using System.Text.Json;
 using Bouvet_Shenanigans.Api.Data;
 using Bouvet_Shenanigans.Api.Interfaces;
+using Bouvet_Shenanigans.Api.Models;
+using Bouvet_Shenanigans.Api.Services;
 using Bouvet_Shenanigans.Api.SignalR;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Logging;
 
 namespace Bouvet_Shenanigans.Api
 {
@@ -10,6 +17,12 @@ namespace Bouvet_Shenanigans.Api
         public static Task ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            services.AddScoped(typeof(AadService))
+                    .AddScoped(typeof(PbiEmbedService));
+
+            services.Configure<AzureAd>(config.GetSection("AzureAd"))
+                .Configure<PowerBI>(config.GetSection("PowerBI"));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -28,7 +41,12 @@ namespace Bouvet_Shenanigans.Api
                 options.UseSqlServer(connStr);
             });
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddHealthChecks();
@@ -36,6 +54,16 @@ namespace Bouvet_Shenanigans.Api
 
             return Task.CompletedTask;
         }
+
+        public static void FixMicrosoftIdentityOptionsMonitorRaceCondition(IServiceProvider services)
+        {
+            var options = services.GetService<IOptionsMonitor<OpenIdConnectOptions>>();
+
+            // By initializing the options before the application starts, we ensure that
+            // no race condition can occur.
+            options!.Get(OpenIdConnectDefaults.AuthenticationScheme);
+        }
+
         public static async Task ConfigureDatabase(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
@@ -54,11 +82,14 @@ namespace Bouvet_Shenanigans.Api
                 app.UseSwaggerUI();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055", "http://localhost:5173", "https://pidetection.azurewebsites.net")
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseCors(policy => policy.WithOrigins("https://localhost:3000", "https://localhost:7055", "http://localhost:5173", "https://pidetection.azurewebsites.net", "http://localhost:3333")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

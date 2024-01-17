@@ -33,6 +33,7 @@ namespace Bouvet_Shenanigans.Api.Controllers
             DummySubscription = dummySubscription;
             return Ok(new { data = new { success = true } });
         }
+
         [HttpPost("push-not")]
         public async Task<IActionResult> PostNot()
         {
